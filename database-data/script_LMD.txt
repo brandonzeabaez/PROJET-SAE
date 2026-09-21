@@ -1,0 +1,52 @@
+USE masae2026_mysql;
+
+CREATE TABLE IF NOT EXISTS Hierachie(
+   id_hierarchie INT,
+   role VARCHAR(50),
+   CONSTRAINT pk_hierarchie_con PRIMARY KEY(id_hierarchie)
+);
+
+CREATE TABLE IF NOT EXISTS Permission(
+   id_permission INT,
+   libelle VARCHAR(50) NOT NULL,
+   CONSTRAINT pk_permission_con PRIMARY KEY(id_permission)
+);
+
+CREATE TABLE IF NOT EXISTS User(
+   id_user INT,
+   email VARCHAR(50),
+   mot_de_passe CHAR(50),
+   nom CHAR(50),
+   prenom CHAR(50),
+   telephone CHAR(16),
+   pays CHAR(30),
+   id_hierarchie INT NOT NULL,
+   CONSTRAINT pk_user_con PRIMARY KEY(id_user),
+   CONSTRAINT fk_user_to_hierarchie_con FOREIGN KEY(id_hierarchie) REFERENCES Hierachie(id_hierarchie)
+);   
+
+CREATE TABLE IF NOT EXISTS Publication(
+   id_publication INT,
+   nom_publication VARCHAR(50),
+   date_publication DATE,
+   id_user INT NOT NULL,
+   CONSTRAINT pk_publication_con PRIMARY KEY(id_publication),
+   CONSTRAINT fk_publication_con FOREIGN KEY(id_user) REFERENCES User(id_user)
+);
+
+CREATE TABLE IF NOT EXISTS Possede(
+   id_hierarchie INT,
+   id_permission INT,
+   CONSTRAINT pk_possede_con PRIMARY KEY(id_hierarchie, id_permission),
+   CONSTRAINT pk_possede_to_hierarchie_con FOREIGN KEY(id_hierarchie) REFERENCES Hierachie(id_hierarchie),
+   CONSTRAINT fk_possede_to_permission_con FOREIGN KEY(id_permission) REFERENCES Permission(id_permission)
+);   
+
+CREATE TABLE IF NOT EXISTS Reserve(
+   id_user INT,
+   id_publication INT,
+   date_reservation DATE,
+   CONSTRAINT pk_possede_con PRIMARY KEY(id_user, id_publication),
+   CONSTRAINT fk_user_con FOREIGN KEY(id_user) REFERENCES User(id_user),
+   FOREIGN KEY(id_publication) REFERENCES Publication(id_publication)
+);
