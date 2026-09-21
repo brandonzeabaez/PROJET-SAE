@@ -1,0 +1,15 @@
+# Toutes les URL sont envoyées au front controller, sauf lorsqu'un fichier ou
+# un dossier existe réellement (feuilles de style, images, scripts).
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# Empêche l'affichage du contenu des dossiers.
+Options -Indexes
