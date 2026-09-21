@@ -20,7 +20,7 @@ final class User extends Model
         // pas en modifier le sens : c'est ce qui bloque l'injection SQL.
         // LIMIT 1 arrête la recherche au premier résultat.
         $statement = $this->db()->prepare(
-            'SELECT id, email, password_hash FROM users WHERE email = :email LIMIT 1'
+            'SELECT id_user, email, mot_de_passe FROM User WHERE email = :email LIMIT 1'
         );
 
         // execute fournit les valeurs des marqueurs et lance la requête.
@@ -38,7 +38,7 @@ final class User extends Model
     {
         // INSERT ajoute une ligne. Mêmes marqueurs nommés que ci-dessus.
         $statement = $this->db()->prepare(
-            'INSERT INTO users (email, password_hash) VALUES (:email, :password_hash)'
+            'INSERT INTO User (email, mot_de_passe) VALUES (:email, :mot_de_passe)'
         );
 
         $statement->execute([
@@ -48,7 +48,7 @@ final class User extends Model
             // différent à chaque appel, ce qui rend inutilisables les tables de
             // correspondance précalculées. PASSWORD_DEFAULT laisse PHP choisir
             // le meilleur algorithme disponible, et suivra ses évolutions.
-            'password_hash' => password_hash($password, PASSWORD_DEFAULT),
+            'mot_de_passe' => password_hash($password, PASSWORD_DEFAULT),
         ]);
 
         // lastInsertId renvoie l'identifiant auto-incrémenté de la ligne créée.

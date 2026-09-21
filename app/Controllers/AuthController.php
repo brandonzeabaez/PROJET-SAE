@@ -58,7 +58,7 @@ final class AuthController extends Controller
         // se fait à temps constant, donc le temps de réponse ne révèle rien.
         // Message identique dans les deux cas : distinguer « e-mail inconnu » de
         // « mot de passe incorrect » permettrait de découvrir qui est inscrit.
-        if ($user === null || !password_verify($password, $user['password_hash'])) {
+        if ($user === null || !password_verify($password, $user['mot_de_passe'])) {
             $this->renderLoginError('Identifiants incorrects.', $email);
 
             return;
@@ -72,7 +72,7 @@ final class AuthController extends Controller
 
         // $_SESSION conserve ces valeurs d'une requête à l'autre. Leur présence
         // sert désormais de preuve que l'utilisateur est connecté.
-        $_SESSION['user_id'] = (int) $user['id'];
+        $_SESSION['user_id'] = (int) $user['id_user'];
         $_SESSION['user_email'] = $user['email'];
 
         // Redirection après un POST réussi : sans elle, un rafraîchissement

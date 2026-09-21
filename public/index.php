@@ -12,6 +12,12 @@ use App\Core\Router;
 // dirname remonte d'un niveau, donc BASE_PATH vaut .../PROJET-SAE
 define('BASE_PATH', dirname(__DIR__));
 
+// Composer : charge les librairies installées 
+require BASE_PATH . '/vendor/autoload.php';
+
+// Lit le fichier .env et remplit $_ENV avec les identifiants
+Dotenv\Dotenv::createImmutable(BASE_PATH)->load();
+
 // spl_autoload_register enregistre une fonction que PHP appellera tout seul
 // chaque fois qu'une classe encore inconnue est utilisée.
 // static devant function : la fonction n'a pas besoin du contexte $this.
