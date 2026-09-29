@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
+
 namespace App\Core;
+
 class Router {
     private array $routes = [];
     function __construct() {
@@ -31,7 +33,7 @@ class Router {
         }
     }
     function loadHandler(string $handler) : void {
-        $handler = new $handler();
+        (new $handler())->execute();
     }
     }
 

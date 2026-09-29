@@ -10,7 +10,7 @@ final class HomeController extends Controller
 {
     public function index(): void
     {
-        // Premier argument : la vue à afficher, soit app/Views/home/index.php
+        // Premier argument : la vue à afficher, soit App/Views/home/index.php
         // Second argument : les variables transmises à la vue et au gabarit.
         $this->render('home/index', [
             // Repris par le gabarit dans la balise <title>.

@@ -1,0 +1,8 @@
+{
+  "routes": [
+    {
+      "url": "/inscription",
+      "controller": "App\\Controllers\\InscriptionController"
+    }
+  ]
+}
