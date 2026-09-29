@@ -27,6 +27,4 @@
                 <?php
         }
     }
-    $tmp = new InscriptionView();
-    $tmp->showForm();
     ?>

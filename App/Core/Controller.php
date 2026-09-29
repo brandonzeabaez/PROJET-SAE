@@ -20,7 +20,7 @@ abstract class Controller
     protected function render(string $view, array $data = []): void
     {
         // Reconstitue le chemin du fichier de vue à partir de son nom court.
-        $viewFile = BASE_PATH . '/app/Views/' . $view . '.php';
+        $viewFile = BASE_PATH . '/App/Views/' . $view . '.php';
 
         if (!is_file($viewFile)) {
             // Erreur explicite plutôt qu'une page blanche en cas de faute de frappe.
@@ -51,7 +51,7 @@ abstract class Controller
 
         // Le gabarit s'exécute et insère $content au bon endroit. C'est ce détour
         // par le tampon qui évite de répéter le <head> et le menu dans chaque vue.
-        require BASE_PATH . '/app/Views/layout.php';
+        require BASE_PATH . '/App/Views/layout.php';
     }
 
     // : never indique que la méthode ne rend jamais la main, car elle se termine
