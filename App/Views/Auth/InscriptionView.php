@@ -12,14 +12,14 @@
                 </head>
                 <body>
             <?php
-            echo '<form method="POST">';
+            echo '<form method="POST" action="/inscription">';
             foreach (self::FORM_VALUES as $value)  {
-                echo '<ul><label>' . $value . '</label><input type=text ></ul>';
+                echo '<div><label>' . $value . '</label><input type="text" name="' . $value . '"></div>';
             }
-            echo '<ul><label>Email</label><input type="email" name="email"></ul>';
-            echo '<ul><label>Mot de passe</label><input type="password" name="password"></ul>';
-            echo '<ul><label>Confirmation mot de passe</label><input type="password" name="passwordConfirm"></ul>';
-            echo '<ul><button type="submit" ></ul>';
+            echo '<div><label>Email</label><input type="email" name="email"></div>';
+            echo '<div><label>Mot de passe</label><input type="password" name="password"></div>';
+            echo '<div><label>Confirmation mot de passe</label><input type="password" name="passwordConfirm"></div>';
+            echo '<div><button type="submit" >send</button></div>';
             echo '</form>';
              ?>
                 </body>
