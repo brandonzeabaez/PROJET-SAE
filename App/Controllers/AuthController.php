@@ -14,7 +14,7 @@ final class AuthController extends Controller
     public function showLoginForm(): void
     {
         // render est héritée de Controller : elle charge la vue et le gabarit.
-        $this->render('auth/login', [
+        $this->render('Auth/login', [
             'title'       => 'Connexion',
             'description' => 'Connectez-vous à votre espace membre du Projet SAÉ.',
         ]);
@@ -82,7 +82,7 @@ final class AuthController extends Controller
 
     public function showRegistrationForm(): void
     {
-        $this->render('auth/inscription', [
+        $this->render('Auth/inscription', [
             'title'       => 'Inscription',
             'description' => 'Créez votre compte membre pour accéder à votre espace personnel.',
         ]);
@@ -108,7 +108,7 @@ final class AuthController extends Controller
     // seulement par login() pour éviter de répéter trois fois le même render.
     private function renderLoginError(string $error, string $email): void
     {
-        $this->render('auth/login', [
+        $this->render('Auth/login', [
             'title'          => 'Connexion',
             'description'    => 'Connectez-vous à votre espace membre du Projet SAÉ.',
             'error'          => $error,

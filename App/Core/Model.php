@@ -21,7 +21,6 @@
                 $this->pdo = new \PDO($dsn, $_ENV['DB_USER'], $_ENV['DB_PASS']);
                 $this->pdo->exec('SET CHARACTER SET utf8');
                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                echo 'Connected successfully';
             }
             catch (\PDOException $e) {
                 die('Erreur ' . $e->getMessage());
@@ -32,5 +31,4 @@
         }
 
     }
-    $tmp = new Model();
 ?>
