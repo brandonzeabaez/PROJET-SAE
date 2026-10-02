@@ -1,4 +1,4 @@
-USE masae2026_mysql;
+USE sae30392_mysql;
 
 CREATE TABLE IF NOT EXISTS Hierachie(
    id_hierarchie INT,
