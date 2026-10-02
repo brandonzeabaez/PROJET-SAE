@@ -1,4 +1,4 @@
-USE masae2026_mysql;
+USE sae30392_mysql;
 
 CREATE TABLE IF NOT EXISTS Hierachie(
    id_hierarchie INT,
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS Permission(
 );
 
 CREATE TABLE IF NOT EXISTS User(
-   id_user INT,
+   id_user INT AUTO_INCREMENT,
    email VARCHAR(50) UNIQUE NOT NULL,
    mot_de_passe CHAR(50) NOT NULL,
    nom CHAR(50) NOT NULL,
