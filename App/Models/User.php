@@ -4,55 +4,55 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-// Importe la classe mère, située dans un autre espace de noms.
 use App\Core\Model;
+use PDO;
 
-// extends : User hérite de Model, donc dispose de sa méthode db().
+
 final class User extends Model
 {
-    // ?array en retour : la méthode renvoie un tableau ou null.
-    /** @return array<string, mixed>|null */
+    // Cherche user  avec son email  renvoie null s'il existe pas
     public function findByEmail(string $email): ?array
     {
-        // prepare envoie le squelette de la requête à MySQL sans les valeurs.
-        // :email est un marqueur nommé, remplacé plus tard par la valeur réelle.
-        // L'e-mail n'étant jamais collé dans le texte de la requête, il ne peut
-        // pas en modifier le sens : c'est ce qui bloque l'injection SQL.
-        // LIMIT 1 arrête la recherche au premier résultat.
-        $statement = $this->db()->prepare(
-            'SELECT id_user, email, mot_de_passe FROM User WHERE email = :email LIMIT 1'
-        );
+        // email  remplacé par la vraie valeur, bloque l'injection SQL
+        $sql = 'SELECT id_user, email, mot_de_passe FROM User WHERE email = :email LIMIT 1';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue('email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // execute fournit les valeurs des marqueurs et lance la requête.
-        $statement->execute(['email' => $email]);
-
-        // fetch récupère la ligne suivante du résultat, ou false s'il n'y en a plus.
-        $user = $statement->fetch();
-
-        // Opérateur ternaire : condition ? valeur si vrai : valeur si faux.
-        // On convertit le false de PDO en null, plus explicite pour l'appelant.
+        // fetch renvoie false si rien n'est trouvé : on le transforme en null.
         return $user === false ? null : $user;
     }
 
-    public function create(string $email, string $password): int
+    // Enregistre  code secret 1 heure
+    public function saveResetToken(int $id, string $token): void
     {
-        // INSERT ajoute une ligne. Mêmes marqueurs nommés que ci-dessus.
-        $statement = $this->db()->prepare(
-            'INSERT INTO User (email, mot_de_passe) VALUES (:email, :mot_de_passe)'
-        );
+        $sql = 'UPDATE User SET reset_token = :token, reset_expire = DATE_ADD(NOW(), INTERVAL 1 HOUR) WHERE id_user = :id';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue('token', $token, PDO::PARAM_STR);
+        $stmt->bindValue('id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
 
-        $statement->execute([
-            'email' => $email,
-            // password_hash calcule une empreinte à sens unique du mot de passe :
-            // on ne peut pas revenir en arrière. Elle inclut un sel aléatoire,
-            // différent à chaque appel, ce qui rend inutilisables les tables de
-            // correspondance précalculées. PASSWORD_DEFAULT laisse PHP choisir
-            // le meilleur algorithme disponible, et suivra ses évolutions.
-            'mot_de_passe' => password_hash($password, PASSWORD_DEFAULT),
-        ]);
+    // Cherche l'user qui a ce code, si code  pas expiré
+    public function findByResetToken(string $token): ?array
+    {
+        $sql = 'SELECT id_user FROM User WHERE reset_token = :token AND reset_expire > NOW() LIMIT 1';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue('token', $token, PDO::PARAM_STR);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // lastInsertId renvoie l'identifiant auto-incrémenté de la ligne créée.
-        // (int) le convertit en entier, car PDO le renvoie sous forme de chaîne.
-        return (int) $this->db()->lastInsertId();
+        return $user === false ? null : $user;
+    }
+
+    // Change le mdp et efface le code ,  lien sert une fois
+    public function updatePassword(int $id, string $hash): void
+    {
+        $sql = 'UPDATE User SET mot_de_passe = :hash, reset_token = NULL, reset_expire = NULL WHERE id_user = :id';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue('hash', $hash, PDO::PARAM_STR);
+        $stmt->bindValue('id', $id, PDO::PARAM_INT);
+        $stmt->execute();
     }
 }
