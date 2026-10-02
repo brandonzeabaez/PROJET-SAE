@@ -14,6 +14,7 @@
             echo '<div><label>Confirmation mot de passe</label><input type="password" name="passwordConfirm"></div>';
             echo '<div><button type="submit" >send</button></div>';
             echo '</form>';
+            echo '</div>';
 
             $content = ob_get_clean();
             $title = 'Inscription';
