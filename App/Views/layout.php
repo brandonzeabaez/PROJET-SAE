@@ -17,7 +17,7 @@ declare(strict_types=1);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="<?= $description ?>">
-    <title><?= $title– Site de vente</title>
+    <title><?= $title . ' - Site de vente' ?></title>
 </head>
 <body>
     <header>
