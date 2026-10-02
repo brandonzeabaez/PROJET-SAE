@@ -17,14 +17,11 @@ declare(strict_types=1);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="<?= $description ?>">
-    <title><?= $title . ' - Site de vente' ?></title>
+    <title><?= $title . ' - Bourse d\'échange ' ?></title>
 </head>
 <body>
     <header>
-        <p><strong>Site vente</strong></p>
-        <p>Accueil</p>
-
-        <?php \\ un sytème pour faire disparaitre les boutons selon l état de connexion à ajouter ?>
+        <p><strong>Bourse d'échange</strong></p>
         <nav aria-label="Navigation principale">
             <ul>
                 <li><a href="/">Accueil</a></li>
@@ -33,8 +30,7 @@ declare(strict_types=1);
             </ul>
         </nav>
     </header>
-
-    <?php \\ la vue courante va apparaitre ici ?>
+    
     <?= $content ?>
 
     <footer>
