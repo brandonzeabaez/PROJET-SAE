@@ -3,6 +3,10 @@
     {
       "url": "/inscription",
       "controller": "App\\Controllers\\InscriptionController"
+    },
+    {
+      "url": "/",
+      "controller": "App\\Controllers\\HomeController"
     }
-  ]
+    ]
 }

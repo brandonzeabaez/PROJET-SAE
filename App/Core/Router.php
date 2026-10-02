@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace App\Core;
 
-class Router {
+class
+Router {
     private array $routes = [];
     function __construct() {
         $this->loadRoutes();
