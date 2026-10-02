@@ -5,8 +5,24 @@
       "controller": "App\\Controllers\\InscriptionController"
     },
     {
+      "url": "/connexion",
+      "controller": "App\\Controllers\\LoginController"
+    },
+    {
+      "url": "/deconnexion",
+      "controller": "App\\Controllers\\LoginController"
+    },
+    {
+      "url": "/mot-de-passe-oublie",
+      "controller": "App\\Controllers\\LoginController"
+    },
+    {
+      "url": "/reinitialiser",
+      "controller": "App\\Controllers\\LoginController"
+    },
+    {
       "url": "/",
       "controller": "App\\Controllers\\HomeController"
     }
-    ]
+  ]
 }
