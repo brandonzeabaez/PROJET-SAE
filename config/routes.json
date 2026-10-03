@@ -23,6 +23,10 @@
     {
       "url": "/",
       "controller": "App\\Controllers\\HomeController"
+    },
+    {
+      "url": "/mentions-legales",
+      "controller": "App\\Controllers\\MentionsLegalesController"
     }
   ]
 }
