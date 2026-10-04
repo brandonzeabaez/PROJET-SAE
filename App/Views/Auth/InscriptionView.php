@@ -11,7 +11,7 @@
             }
             echo '<div><label>Email</label><input type="email" name="email"></div>';
             echo '<div><label>Mot de passe</label><input type="password" name="password"></div>';
-            echo '<div><label>Confirmation mot de passe</label><input type="password" name="passwordConfirm"></div>';
+            echo '<div><label>Confirmation mot de passe</label><input type="password" name="password_confirmation"></div>';
             echo '<div><button type="submit" >send</button></div>';
             echo '</form>';
             echo '</div>';
