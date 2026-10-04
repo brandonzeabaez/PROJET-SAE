@@ -16,6 +16,9 @@ if (isset($_SESSION['login_time']) && time() - $_SESSION['login_time'] > 7200) {
 
 require BASE_PATH . '/vendor/autoload.php';
 
+$dotenv = Dotenv\Dotenv::createImmutable(BASE_PATH);
+$dotenv->safeLoad();
+
 // routeur regarde l'URL lance contrôleur
 $router = new App\Core\Router();
 $router->route();
