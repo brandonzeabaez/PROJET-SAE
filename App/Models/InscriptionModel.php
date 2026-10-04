@@ -4,7 +4,7 @@
 
 
 class InscriptionModel extends Model {
-        private String $query='INSERT INTO User(email,mot_de_passe,nom,prenom) VALUES (:email,:mot_de_passe,:nom,:prenom)';
+        private String $query='INSERT INTO User(email,mot_de_passe,nom,prenom,pays) VALUES (:email,:mot_de_passe,:nom,:prenom,:pays)';
         private array $dataInscription;
         function __construct(Array $dataInscription)
         {
