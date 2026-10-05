@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Projet SAÉ:  Fichier source de App/Models/User.php</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Projet SAÉ
+   </div>
+   <div id="projectbrief">Documentation du projet</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Recherche" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('_user_8php_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">User.php</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_user_8php.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span>&lt;?php</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>declare(strict_types=1);</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">namespace </span>App\Models;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>use App\Core\Model;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>use PDO;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span></div>
+<div class="foldopen" id="foldopen00029" data-start="{" data-end="};">
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="class_app_1_1_models_1_1_user.html">   29</a></span><span class="keyword">final</span> <span class="keyword">class </span><a class="code hl_class" href="class_app_1_1_models_1_1_user.html">User</a> <span class="keyword">extends</span> <a class="code hl_class" href="class_app_1_1_core_1_1_model.html">Model</a></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>{</div>
+<div class="foldopen" id="foldopen00037" data-start="{" data-end="}">
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="class_app_1_1_models_1_1_user.html#ad52b8fbde1f6e72b9db1db044da46214">   37</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="class_app_1_1_models_1_1_user.html#ad52b8fbde1f6e72b9db1db044da46214">findByEmail</a>(<span class="keywordtype">string</span> $email): ?array</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    {</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        $sql = <span class="stringliteral">&#39;SELECT id_user, email, mot_de_passe FROM User WHERE email = :email LIMIT 1&#39;</span>;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        $stmt = $this-&gt;pdo-&gt;prepare($sql);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        $stmt-&gt;bindValue(<span class="stringliteral">&#39;email&#39;</span>, $email, PDO::PARAM_STR);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        $stmt-&gt;execute();</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        $user = $stmt-&gt;fetch(PDO::FETCH_ASSOC);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keywordflow">return</span> $user === <span class="keyword">false</span> ? null : $user;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    }</div>
+</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span></div>
+<div class="foldopen" id="foldopen00054" data-start="{" data-end="}">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="class_app_1_1_models_1_1_user.html#aca2847e17a4782c89866a978328a7b13">   54</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="class_app_1_1_models_1_1_user.html#aca2847e17a4782c89866a978328a7b13">saveResetToken</a>(<span class="keywordtype">int</span> $id, <span class="keywordtype">string</span> $token): void</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    {</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        $sql = <span class="stringliteral">&#39;UPDATE User SET reset_token = :token, reset_expire = DATE_ADD(NOW(), INTERVAL 1 HOUR) WHERE id_user = :id&#39;</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        $stmt = $this-&gt;pdo-&gt;prepare($sql);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        $stmt-&gt;bindValue(<span class="stringliteral">&#39;token&#39;</span>, $token, PDO::PARAM_STR);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        $stmt-&gt;bindValue(<span class="stringliteral">&#39;id&#39;</span>, $id, PDO::PARAM_INT);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        $stmt-&gt;execute();</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    }</div>
+</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span></div>
+<div class="foldopen" id="foldopen00069" data-start="{" data-end="}">
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="class_app_1_1_models_1_1_user.html#a47625fcaf208ff848ec554e161ea0f15">   69</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="class_app_1_1_models_1_1_user.html#a47625fcaf208ff848ec554e161ea0f15">findByResetToken</a>(<span class="keywordtype">string</span> $token): ?array</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        $sql = <span class="stringliteral">&#39;SELECT id_user FROM User WHERE reset_token = :token AND reset_expire &gt; NOW() LIMIT 1&#39;</span>;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        $stmt = $this-&gt;pdo-&gt;prepare($sql);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        $stmt-&gt;bindValue(<span class="stringliteral">&#39;token&#39;</span>, $token, PDO::PARAM_STR);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        $stmt-&gt;execute();</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        $user = $stmt-&gt;fetch(PDO::FETCH_ASSOC);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordflow">return</span> $user === <span class="keyword">false</span> ? null : $user;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    }</div>
+</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span></div>
+<div class="foldopen" id="foldopen00086" data-start="{" data-end="}">
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="class_app_1_1_models_1_1_user.html#aca31a7a66fcbcf4b15625a002945e131">   86</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="class_app_1_1_models_1_1_user.html#aca31a7a66fcbcf4b15625a002945e131">updatePassword</a>(<span class="keywordtype">int</span> $id, <span class="keywordtype">string</span> $hash): void</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    {</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        $sql = <span class="stringliteral">&#39;UPDATE User SET mot_de_passe = :hash, reset_token = NULL, reset_expire = NULL WHERE id_user = :id&#39;</span>;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        $stmt = $this-&gt;pdo-&gt;prepare($sql);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        $stmt-&gt;bindValue(<span class="stringliteral">&#39;hash&#39;</span>, $hash, PDO::PARAM_STR);</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        $stmt-&gt;bindValue(<span class="stringliteral">&#39;id&#39;</span>, $id, PDO::PARAM_INT);</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        $stmt-&gt;execute();</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    }</div>
+</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>}</div>
+</div>
+<div class="ttc" id="aclass_app_1_1_core_1_1_model_html"><div class="ttname"><a href="class_app_1_1_core_1_1_model.html">App\Core\Model</a></div><div class="ttdoc">Classe de base pour les modèles de données.</div><div class="ttdef"><b>Définition</b> <a href="_model_8php_source.html#l00027">Model.php:28</a></div></div>
+<div class="ttc" id="aclass_app_1_1_models_1_1_user_html"><div class="ttname"><a href="class_app_1_1_models_1_1_user.html">App\Models\User</a></div><div class="ttdoc">Modèle représentant un utilisateur de l&#39;application.</div><div class="ttdef"><b>Définition</b> <a href="#l00029">User.php:30</a></div></div>
+<div class="ttc" id="aclass_app_1_1_models_1_1_user_html_a47625fcaf208ff848ec554e161ea0f15"><div class="ttname"><a href="class_app_1_1_models_1_1_user.html#a47625fcaf208ff848ec554e161ea0f15">App\Models\User\findByResetToken</a></div><div class="ttdeci">findByResetToken(string $token)</div><div class="ttdoc">Vérifie qu&#39;un jeton de réinitialisation existe et n&#39;est pas expiré.</div><div class="ttdef"><b>Définition</b> <a href="#l00069">User.php:69</a></div></div>
+<div class="ttc" id="aclass_app_1_1_models_1_1_user_html_aca2847e17a4782c89866a978328a7b13"><div class="ttname"><a href="class_app_1_1_models_1_1_user.html#aca2847e17a4782c89866a978328a7b13">App\Models\User\saveResetToken</a></div><div class="ttdeci">saveResetToken(int $id, string $token)</div><div class="ttdoc">Enregistre un jeton de réinitialisation associé à un compte.</div><div class="ttdef"><b>Définition</b> <a href="#l00054">User.php:54</a></div></div>
+<div class="ttc" id="aclass_app_1_1_models_1_1_user_html_aca31a7a66fcbcf4b15625a002945e131"><div class="ttname"><a href="class_app_1_1_models_1_1_user.html#aca31a7a66fcbcf4b15625a002945e131">App\Models\User\updatePassword</a></div><div class="ttdeci">updatePassword(int $id, string $hash)</div><div class="ttdoc">Met à jour le mot de passe d&#39;un utilisateur et invalide le jeton.</div><div class="ttdef"><b>Définition</b> <a href="#l00086">User.php:86</a></div></div>
+<div class="ttc" id="aclass_app_1_1_models_1_1_user_html_ad52b8fbde1f6e72b9db1db044da46214"><div class="ttname"><a href="class_app_1_1_models_1_1_user.html#ad52b8fbde1f6e72b9db1db044da46214">App\Models\User\findByEmail</a></div><div class="ttdeci">findByEmail(string $email)</div><div class="ttdoc">Recherche un utilisateur à partir de son adresse e-mail.</div><div class="ttdef"><b>Définition</b> <a href="#l00037">User.php:37</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_b1617d756d2224e91d37255e84e89ba2.html">App</a></li><li class="navelem"><a href="dir_bfb280d7f294dbb71002d6a1d1d9eed4.html">Models</a></li><li class="navelem"><a href="_user_8php.html">User.php</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>

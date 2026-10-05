@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Projet SAÉ:  Fichier source de App/Core/Controller.php</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Projet SAÉ
+   </div>
+   <div id="projectbrief">Documentation du projet</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Recherche" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('_controller_8php_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Controller.php</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_controller_8php.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span>&lt;?php</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>declare(strict_types=1);</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="namespace_app_1_1_core.html">   18</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_app_1_1_core.html">App\Core</a>;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>use RuntimeException;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span></div>
+<div class="foldopen" id="foldopen00028" data-start="{" data-end="};">
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="class_app_1_1_core_1_1_controller.html">   28</a></span><span class="keyword">abstract</span> <span class="keyword">class </span><a class="code hl_class" href="class_app_1_1_core_1_1_controller.html">Controller</a></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>{</div>
+<div class="foldopen" id="foldopen00041" data-start="{" data-end="}">
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="class_app_1_1_core_1_1_controller.html#add9f4d79b62c97d71721b1a42390d22f">   41</a></span>    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="class_app_1_1_core_1_1_controller.html#add9f4d79b62c97d71721b1a42390d22f">render</a>(<span class="keywordtype">string</span> $view, array $data = []): void</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    {</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        $viewFile = BASE_PATH . <span class="stringliteral">&#39;/App/Views/&#39;</span> . $view . <span class="stringliteral">&#39;.php&#39;</span>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keywordflow">if</span> (!is_file($viewFile)) {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(<span class="stringliteral">&quot;Vue introuvable : {$view}&quot;</span>);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        }</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        $data += [</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <span class="stringliteral">&#39;title&#39;</span>       =&gt; <span class="stringliteral">&#39;Projet SAÉ&#39;</span>,</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            <span class="stringliteral">&#39;description&#39;</span> =&gt; <span class="stringliteral">&#39;Site Web réalisé dans le cadre de la SAÉ du semestre 3.&#39;</span>,</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        ];</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        extract($data, EXTR_SKIP);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        ob_start();</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        require $viewFile;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        $content = (string) ob_get_clean();</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        require BASE_PATH . <span class="stringliteral">&#39;/App/Views/layout.php&#39;</span>;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    }</div>
+</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span></div>
+<div class="foldopen" id="foldopen00073" data-start="{" data-end="}">
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="class_app_1_1_core_1_1_controller.html#a3002f5f4d19a3d1278753a1c9b4ace35">   73</a></span>    <span class="keyword">protected</span> <span class="keyword">function</span> <a class="code hl_function" href="class_app_1_1_core_1_1_controller.html#a3002f5f4d19a3d1278753a1c9b4ace35">redirect</a>(<span class="keywordtype">string</span> $path): never</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    {</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        header(<span class="stringliteral">&#39;Location: &#39;</span> . $path, <span class="keyword">true</span>, 302);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        exit;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    }</div>
+</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>}</div>
+</div>
+<div class="ttc" id="aclass_app_1_1_core_1_1_controller_html"><div class="ttname"><a href="class_app_1_1_core_1_1_controller.html">App\Core\Controller</a></div><div class="ttdoc">Classe abstraite racine des contrôleurs de l&#39;application.</div><div class="ttdef"><b>Définition</b> <a href="#l00028">Controller.php:29</a></div></div>
+<div class="ttc" id="aclass_app_1_1_core_1_1_controller_html_a3002f5f4d19a3d1278753a1c9b4ace35"><div class="ttname"><a href="class_app_1_1_core_1_1_controller.html#a3002f5f4d19a3d1278753a1c9b4ace35">App\Core\Controller\redirect</a></div><div class="ttdeci">redirect(string $path)</div><div class="ttdoc">Redirige le navigateur vers une route donnée.</div><div class="ttdef"><b>Définition</b> <a href="#l00073">Controller.php:73</a></div></div>
+<div class="ttc" id="aclass_app_1_1_core_1_1_controller_html_add9f4d79b62c97d71721b1a42390d22f"><div class="ttname"><a href="class_app_1_1_core_1_1_controller.html#add9f4d79b62c97d71721b1a42390d22f">App\Core\Controller\render</a></div><div class="ttdeci">render(string $view, array $data=[])</div><div class="ttdoc">Rend une vue en injectant les variables de contexte.</div><div class="ttdef"><b>Définition</b> <a href="#l00041">Controller.php:41</a></div></div>
+<div class="ttc" id="anamespace_app_1_1_core_html"><div class="ttname"><a href="namespace_app_1_1_core.html">App\Core</a></div><div class="ttdef"><b>Définition</b> <a href="#l00018">Controller.php:18</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_b1617d756d2224e91d37255e84e89ba2.html">App</a></li><li class="navelem"><a href="dir_5af740d9b5bf65d4c5446c61e6033481.html">Core</a></li><li class="navelem"><a href="_controller_8php.html">Controller.php</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>
