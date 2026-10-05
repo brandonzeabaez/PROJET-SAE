@@ -7,6 +7,8 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Models\User;
 use PDOException;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
 final class LoginController extends Controller
 {
@@ -108,23 +110,57 @@ final class LoginController extends Controller
     {
         $message = '';
 
-        // formulaire envoyé
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = trim((string) ($_POST['email'] ?? ''));
             $userModel = new User();
             $user = $userModel->findByEmail($email);
 
-            // email existe crée un code secret et envoie le lien
             if ($user !== null) {
                 $token = bin2hex(random_bytes(32));
                 $userModel->saveResetToken((int) $user['id_user'], $token);
 
-                $lien = 'http://localhost:8000/reinitialiser?token=' . $token;
-                mail($email, 'Mot de passe oublié', 'Cliquez sur ce lien : ' . $lien);
-                error_log($lien); 
+                $appUrl = rtrim($_ENV['APP_URL'] ?? 'http://localhost:8080', '/');
+                $lien = $appUrl . '/reinitialiser?token=' . $token;
+
+                error_log("Test identifiants : Utilisateur=[" . $_ENV['MAIL_USERNAME'] . "] MdP longueur=" . strlen($_ENV['MAIL_PASSWORD'] ?? ''));
+
+                $mail = new PHPMailer(true);
+                try {
+                    $mail->isSMTP();
+                    $mail->Host       = 'smtp.gmail.com';
+                    $mail->SMTPAuth   = true;
+                    $mail->Username   = $_ENV['MAIL_USERNAME'];
+                    $mail->Password   = $_ENV['MAIL_PASSWORD'];
+                    // Utilisation de SMTPS sur le port 465 calquée sur votre InscriptionController
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+                    $mail->Port       = 465;
+                    $mail->CharSet    = PHPMailer::CHARSET_UTF8;
+
+                    $mail->setFrom($_ENV['MAIL_USERNAME'], 'Bourse échange');
+
+                    // Si votre table User contient le prénom, on l'utilise, sinon on passe juste l'e-mail
+                    $prenom = $user['prenom'] ?? '';
+                    $mail->addAddress($email, $prenom);
+
+                    $prenomHtml = htmlspecialchars($prenom);
+                    $salutation = $prenomHtml !== '' ? "Bonjour $prenomHtml," : "Bonjour,";
+
+                    $mail->isHTML(true);
+                    $mail->Subject = 'Réinitialisation de votre mot de passe';
+                    $mail->Body    = "<p>{$salutation}</p>
+                        <p>Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le lien ci-dessous :</p>
+                        <p><a href='{$lien}'>{$lien}</a></p>
+                        <p>Si vous n'êtes pas à l'origine de cette demande, ignorez simplement cet e-mail.</p>
+                        <p>L'équipe SAE</p>";
+
+                    $mail->AltBody = "{$salutation}\n\nVous avez demandé à réinitialiser votre mot de passe. Cliquez sur le lien ci-dessous :\n{$lien}\n\nSi vous n'êtes pas à l'origine de cette demande, ignorez simplement cet e-mail.\n\nL'équipe SAE";
+
+                    $mail->send();
+                } catch (PHPMailerException $e) {
+                    error_log('Mail de réinitialisation non envoyé : ' . $mail->ErrorInfo);
+                }
             }
 
-            // même message dans tous les cas pour ne pas dire qui est inscrit
             $message = 'Si ce compte existe, un email a été envoyé.';
         }
 
