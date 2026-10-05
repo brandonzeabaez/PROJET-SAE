@@ -1,5 +1,5 @@
 <?php
-// valeurs vides si le contrôleur n'envoie rien
+
 $error ??= '';
 $submittedEmail ??= '';
 ?>

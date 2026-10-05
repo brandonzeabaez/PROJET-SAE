@@ -1,9 +1,10 @@
 <main class="login-card">
     <h1>Mot de passe oublié</h1>
-
+    <p>Entrez votre adresse e-mail : vous recevrez un lien valable 1 heure pour choisir un nouveau mot de passe.</p>
+    
     <?php // message affiché après l'envoi du formulaire ?>
     <?php if ($message !== '') : ?>
-        <p role="alert"><?= htmlspecialchars($message) ?></p>
+        <p role="status"><?= htmlspecialchars($message) ?></p>
     <?php endif; ?>
 
     <?php // envoie l'email en POST vers /mot-de-passe-oublie ?>
