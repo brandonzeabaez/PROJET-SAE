@@ -1,9 +1,4 @@
-<?php
-// valeurs vides si le contrôleur n'envoie rien
-$error ??= '';
-$submittedEmail ??= '';
-?>
-<main class="login-card">
+<section class="login-card">
     <h1>Connexion</h1>
 
     <?php // user connecté on affiche son email ?>
@@ -46,4 +41,5 @@ $submittedEmail ??= '';
         </p>
 
     <?php endif; ?>
-</main>
+</section>
+

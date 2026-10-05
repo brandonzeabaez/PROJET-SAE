@@ -20,7 +20,7 @@ final class User extends Model
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // fetch renvoie false si rien n'est trouvé : on le transforme en null.
+        // fetch renvoie false si rien n'est trouvé on le transforme en null.
         return $user === false ? null : $user;
     }
 
