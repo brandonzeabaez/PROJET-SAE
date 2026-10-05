@@ -15,6 +15,7 @@ declare(strict_types=1);
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="<?= $description ?>">
     <title><?= $title . ' - Bourse d\'échange ' ?></title>
@@ -30,8 +31,10 @@ declare(strict_types=1);
             </ul>
         </nav>
     </header>
-    
-    <?= $content ?>
+
+    <main>
+        <?= $content ?>
+    </main>
 
     <footer>
         <p>Aix-Marseille Université IUT </p>
