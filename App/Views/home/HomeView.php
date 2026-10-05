@@ -7,7 +7,7 @@ class HomeView {
 
         ob_start();
         ?>
-        <main>
+        
             <section>
                 <h1>Des objets utiles qui ont le droit à une seconde vie</h1>
                 <p>Consultez les objets disponibles et réservez-les simplement</p>
@@ -23,7 +23,7 @@ class HomeView {
                     <li>Autres</li>
                 </ul>
             </section>
-        </main>
+        
         <?php
         $content = ob_get_clean();
 
