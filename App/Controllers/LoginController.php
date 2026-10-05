@@ -138,7 +138,7 @@ final class LoginController extends Controller
 
                     $mail->setFrom($_ENV['MAIL_USERNAME'], 'Bourse échange');
 
-                    // Si votre table User contient le prénom, on l'utilise, sinon on passe juste l'e-mail
+
                     $prenom = $user['prenom'] ?? '';
                     $mail->addAddress($email, $prenom);
 
@@ -161,7 +161,7 @@ final class LoginController extends Controller
                 }
             }
 
-            $message = 'Si ce compte existe, un email a été envoyé.';
+            $message = 'Si ce compte existe bien, un email a été envoyé.';
         }
 
         $this->render('Auth/mot-de-passe-oublie', [
