@@ -1,7 +1,7 @@
-<main class="login-card">
+<section class="login-card">
     <h1>Mot de passe oublié</h1>
     <p>Entrez votre adresse e-mail : vous recevrez un lien valable 1 heure pour choisir un nouveau mot de passe.</p>
-    
+
     <?php // message affiché après l'envoi du formulaire ?>
     <?php if ($message !== '') : ?>
         <p role="status"><?= htmlspecialchars($message) ?></p>
@@ -20,4 +20,4 @@
     </form>
 
     <p class="login-links"><a href="/connexion">Retour à la connexion</a></p>
-</main>
+</section>

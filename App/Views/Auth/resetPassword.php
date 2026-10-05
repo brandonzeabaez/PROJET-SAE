@@ -1,10 +1,9 @@
-<main class="login-card">
+<section class="login-card">
     <h1>Nouveau mot de passe</h1>
 
     <?php // message erreur  s'il y en a un ?>
-    <?php if ($erreur !== '') : ?>
-        
-        <p role="alert"><?= htmlspecialchars($erreur) ?></p>
+    <?php if ($error !== '') : ?>
+        <p role="alert"><?= htmlspecialchars($error) ?></p>
     <?php endif; ?>
 
     <?php // affiche formulaire si le lien est valide ?>
@@ -36,5 +35,4 @@
         <a href="/mot-de-passe-oublie">Demander un nouveau lien</a><br>
         <a href="/connexion">Retour à la connexion</a>
     </p>
-</main>
-
+</section>
