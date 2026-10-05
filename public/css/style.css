@@ -11,8 +11,9 @@ body{
     font-family: Arial, sans-serif;
     color: var(--texte);
     background: var(--beige);
-    margin: 0;
+    margin: 0 auto;
     padding: 1rem;
+    max-width: 1600px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -80,6 +81,11 @@ main{
     margin: 1rem auto;
 }
 
+main.login-card {
+    flex: 0 0 auto;
+    align-self: center;
+}
+
 h1 {
     color: var(--bleu);
     margin-top: 0;
@@ -124,6 +130,21 @@ button:hover
 button:active { transform: scale(0.97); }
 
 a { color: var(--bleu); }
+
+.error {
+    color: #b3261e;
+    font-weight: bold;
+    margin: 0 0 1rem;
+}
+
+select {
+    width: 100%;
+    padding: .65rem;
+    background: var(--formulaire);
+    border-radius: 6px;
+    font-size: 1rem;
+}
+select:focus { outline: 2px solid var(--bleu); }
 
 @media (max-width: 768px){
     body { padding: .6rem; }

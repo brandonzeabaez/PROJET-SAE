@@ -31,8 +31,10 @@ declare(strict_types=1);
             </ul>
         </nav>
     </header>
-    
-    <?= $content ?>
+
+    <main>
+        <?= $content ?>
+    </main>
 
     <footer>
         <p>Aix-Marseille Université IUT </p>

@@ -32,7 +32,7 @@ class InscriptionController {
         }
         private function handlePost() : void {
             if (!$this->passwordValidation()) {
-                $this->view->showForm('Mot de passe incorrect');
+                $this->view->showForm('Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial (@ $ ! % * ? &), et les deux saisies doivent être identiques.');
                 return;
             }
             $this->vals = [
