@@ -1,6 +1,27 @@
 <?php
+/**
+ * @file CountriesEnum.php
+ * @brief Énumération des pays disponibles dans l'application.
+ *
+ * Chaque valeur correspond à un code ISO 3166-1 alpha-2 et est associée
+ * à un libellé lisible pour l'affichage dans le formulaire d'inscription.
+ *
+ * @author Brandon
+ * @author Aymen
+ * @author Ymen
+ * @author Milan
+ * @date 2026
+ */
 namespace App\Content\Enums;
-enum  countriesEnum :string {
+
+/**
+ * @brief Énumération des pays disponibles dans l'application.
+ *
+ * Chaque valeur correspond à un code ISO 3166-1 alpha-2 et est associée
+ * à un libellé lisible pour l'affichage dans le formulaire d'inscription.
+ */
+enum CountriesEnum : string
+{
     case Afghanistan = 'AF';case AfriqueDuSud = 'ZA';
     case Aland = 'AX';
     case Albanie = 'AL';
@@ -249,7 +270,12 @@ enum  countriesEnum :string {
     case Yemen = 'YE';
     case Zambie = 'ZM';
     case Zimbabwe = 'ZW';
-    private CONST LABELS = ['ZA' => 'Afrique du Sud',
+    /**
+     * @brief Tableau de correspondance entre le code ISO du pays et son libellé.
+     *
+     * @var array<string, string>
+     */
+    private const LABELS = ['ZA' => 'Afrique du Sud',
     'AX' => 'Îles Åland',
     'DZ' => 'Algérie',
     'AG' => 'Antigua-et-Barbuda',
@@ -357,8 +383,15 @@ enum  countriesEnum :string {
     'TM' => 'Turkménistan',
     'WF' => 'Wallis-et-Futuna',
     'YE' => 'Yémen'];
-    public function  label() : string {
-        return self::LABELS[$this->value] ?? $this->name;
-        }
 
+    /**
+     * @brief Retourne le libellé lisible associé au pays.
+     *
+     * @return string Nom complet du pays ou son identifiant si aucun libellé
+     * n'est trouvé dans la table de correspondance.
+     */
+    public function label(): string
+    {
+        return self::LABELS[$this->value] ?? $this->name;
+    }
 }

@@ -1,0 +1,21 @@
+# Doxyfile généré pour le projet SAÉ
+
+PROJECT_NAME           = "Projet SAÉ"
+PROJECT_BRIEF          = "Documentation du projet"
+OUTPUT_DIRECTORY       = docs/doxygen
+CREATE_SUBDIRS         = NO
+OUTPUT_LANGUAGE        = French
+INPUT                  = App README.md
+EXCLUDE_PATTERNS       = App/Controllers/Email/PHPMailer-master
+FILE_PATTERNS          = *.php *.md
+RECURSIVE              = YES
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+GENERATE_XML           = NO
+WARN_IF_UNDOCUMENTED   = NO
+QUIET                  = YES
