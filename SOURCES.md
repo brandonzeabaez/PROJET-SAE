@@ -1,0 +1,36 @@
+# PROJET-SAE
+## Sources
+
+| Sujet | Type | Lien |
+|---|---|---|
+| Sécurisation de la connexion avec PDO (éviter les injections SQL) | Forum (Reddit) | [reddit.com/r/PHP](https://www.reddit.com/r/PHP/comments/ypct3/securely_connecting_to_sql_database_with_pdo/) |
+| Fichier `.env` | Article de blog | [blog.crea-troyes.fr](https://blog.crea-troyes.fr/4452/codeigniter-4-comment-se-connecter-a-une-base-de-donnees/) |
+| Types de variables MySQL (numériques) | Documentation officielle | [dev.mysql.com](https://dev.mysql.com/doc/refman/9.7/en/numeric-types.html) |
+| Éviter les injections SQL (requêtes préparées) | Documentation officielle | [php.net – PDO::prepare](https://www.php.net/manual/en/pdo.prepare.php) |
+| Choix de l'algorithme de hachage pour le stockage des données | Article (Medium) | [medium.com](https://medium.com/@smujtabaja/some-hashing-algorithms-their-strength-ratings-426e35c8ef18) |
+| Autoloaders | Documentation officielle | [php.net – spl_autoload_register](https://www.php.net/manual/fr/function.spl-autoload-register.php) |
+| Hachage des mots de passe (`password_hash`) | Vidéo (YouTube) | [youtube.com](https://www.youtube.com/watch?v=b6MpUm8CbZo) |
+| Choix du moteur de table InnoDB | Article (LinkedIn) | [linkedin.com](https://fr.linkedin.com/pulse/how-chose-right-mysql-database-engine-saeed-anabtawi?tl=fr) |
+| Doxygen : génération de documentation PHP | Vidéo (YouTube) | [youtube.com](https://www.youtube.com/watch?v=-mid_0tUMeQ) |
+| Expressions régulières (regex) en PHP | Article de blog | [blog.crea-troyes.fr](https://blog.crea-troyes.fr/6403/regex-php-guide-complet-les-10-regex-les-plus-utilisees/) |
+| Messages flash | Vidéo (YouTube) | [youtube.com](https://www.youtube.com/watch?v=YOowArgPkQc&t=52s) |
+
+## Liste des prompts
+| Tâche | Outil | Prompt (résumé) | Solution proposée | Prise de décision |
+|---|---|---|---|---|
+| Autoload du Router | Claude | Erreur `Class "App\Core\Router" not found` | 🧩 Autoloader Composer PSR-4 (`"App\\": "App/"`) + `require vendor/autoload.php`<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 | ✅ ça a été implémenter suivi de recherche sur internet vidéo yt |
+| Autoload des contrôleurs | Claude | Les contrôleurs des routes ne sont pas chargés | 🧩 Utiliser le nom complet de classe (namespace) dans le Router<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 | ✅ débuggage comprendre pourquoi ça ne marchait pas |
+| Routes en JSON | Claude | Faire `routes.json` pour `InscriptionController` | 🧩 Clés `url` et `controller` cohérentes avec le code du Router<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 |  ❌ finalement on a pris un format json un peu plus simple pour le projet |
+| Composer | Claude | Que répondre à `composer init` avec un `composer.json` existant ? | 🧩 Un seul `composer.json`, ajouter le bloc `autoload` puis `composer dump-autoload`<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 | ✅  : Question sur les champs du fichier json géneré avec composer init  pouvait être mis sur le composer.json existant|
+| Page blanche | Claude | La page `/inscription` est blanche | 🧩 Le Router doit appeler `execute()`, le contrôleur doit afficher une vue<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 | ✅  : Débuggage pour savoir si le formulaire avait bien été envoyé |
+| GET / POST | Claude | Comprendre le flux du formulaire et la redirection | 🧩 `if ($_SERVER['REQUEST_METHOD'] !== 'POST')` + `return`, puis `header('Location: ...')` + `exit`<br><br>🔗 : https://claude.ai/chat/1a1dbbdd-da9c-473e-a7c3-4f8b2e77066+9 | ✅  : Comprendre pourquoi on utiliser cela dans le formulaire pour comprendre le workflow du formulaire en terme de requête  |
+| Erreur PDO HY093 | Claude | `Invalid parameter number` à l'insertion | 🧩 Placeholders nommés, clés de `$vals` identiques aux placeholders<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 | ✅  : Comprendre c'était quoi l'erreur que j'avais dans le modèle sur le formulaire dfinalement c'est que les placeholders en '?' posaiient problème lorsque qu'oon mettait un tableau associatif de plus les insert into il n'y avait pas tous les champs' |
+| Base de données MySQL | Claude | Trigger, `NOT NULL`, `UNIQUE`, `MODIFY COLUMN`, `AUTO_INCREMENT` | 🧩 `AUTO_INCREMENT` plutôt qu'un trigger, `VARCHAR(255)` pour le hash, les contraintes restent après `MODIFY`<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 | ✅ : c'était plus sur un choix de conception pour voir si on reprenait entièrement la LMD de la base de données ou si on modifiait le comportement pour pouvoir créer un utilisateur car il fallait un id et c'était plus simple et leger un autoincrement' |
+| Champs non envoyés | Claude | `Undefined array key "nom"` | 🧩 `name=\"..\"` dans une chaîne entre apostrophes : retirer les antislashs<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 | ✅  : Débuggage le name="$foo" étaient mal faits dans les balises input |
+| Debug | Claude | Afficher les erreurs dans le terminal et pas dans la page | 🧩 `error_log()` et `display_errors=0`<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 |  ❌ : ça n'a pas été implémenter finalement ' |
+| Layout | Claude | Où mettre favicon, meta et menu ? | 🧩 Un `layout.php` commun, les vues capturées avec `ob_start()` / `ob_get_clean()`<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 |  ❌ : pas implémenter juste pour savoir s'il fallait le placer dans le layout et comment faire pour le mettre à chaque view avec la fonction ob_get_clean() mais pas implementer avec le prompt |
+| README | Claude | Géneration du README en markdown | est ce que tu peux me faire en markdown les prompts fait avec le lien dans le tableau sur cette conversation : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 | ✅ : implémenter dans le README à la racine du projet |
+| Erreur de dezoom css | Claude | Corriger l'extension de la carte en dezoom | Un sélecteur pour corriger ça | Application du sélecteur |
+| Explication d'une vidéo Anglaise | Claude | https://www.youtube.com/watch?v=6ERdu4k62wI explication | Compréhension de plusieurs principes | Ca m'a aidé dans la compréhension et j'ai appliqué certaines choses |
+| Comprendre la différence entre show() et render() | Claude | Différence show() et render() pour le layout | Même principe, render() unique et show() depuis chaque vue | J'ai utilisé show() même si render() a été utilisé par d'autres membres |
+| Faire le README | Claude | Faire un Readme pour installer le projet et pouvoir développer | https://claude.ai/share/7ce2810a-615f-4d55-a16e-cdccf5501ff2 | implémentation dans le readme |
