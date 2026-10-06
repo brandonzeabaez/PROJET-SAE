@@ -19,7 +19,6 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\User;
-use PDOException;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
@@ -47,12 +46,12 @@ final class LoginController extends Controller
         }
 
         if ($url === '/mot-de-passe-oublie') {
-            $this->oublie();
+            $this->forgotPassword();
             return;
         }
 
         if ($url === '/reinitialiser') {
-            $this->reinitialiser();
+            $this->resetPassword();
             return;
         }
 
@@ -69,9 +68,14 @@ final class LoginController extends Controller
      */
     public function showLoginForm(): void
     {
+        // erreur gardée en session par login(), affichée une seule fois
+        $error = $_SESSION['error'] ?? '';
+        unset($_SESSION['error']);
+
         $this->render('Auth/login', [
             'title'       => 'Connexion',
             'description' => 'Connectez-vous à votre espace membre du Projet SAÉ.',
+            'error'       => $error,
         ]);
     }
 
@@ -132,18 +136,17 @@ final class LoginController extends Controller
         $message = '';
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = trim((string) ($_POST['email'] ?? ''));
+            $email = trim((string) filter_input(INPUT_POST, 'email'));
             $userModel = new User();
             $user = $userModel->findByEmail($email);
 
+            // email existe crée un code secret et envoie le lien
             if ($user !== null) {
                 $token = bin2hex(random_bytes(32));
                 $userModel->saveResetToken((int) $user['id_user'], $token);
 
                 $appUrl = rtrim($_ENV['APP_URL'] ?? 'http://localhost:8000', '/');
-                $lien = $appUrl . '/reinitialiser?token=' . $token;
-
-                error_log("Test identifiants : Utilisateur=[" . $_ENV['MAIL_USERNAME'] . "] MdP longueur=" . strlen($_ENV['MAIL_PASSWORD'] ?? ''));
+                $link = $appUrl . '/reinitialiser?token=' . $token;
 
                 $mail = new PHPMailer(true);
                 try {
@@ -168,11 +171,11 @@ final class LoginController extends Controller
                     $mail->Subject = 'Réinitialisation de votre mot de passe';
                     $mail->Body    = "<p>{$salutation}</p>
                         <p>Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le lien ci-dessous :</p>
-                        <p><a href='{$lien}'>{$lien}</a></p>
+                        <p><a href='{$link}'>{$link}</a></p>
                         <p>Si vous n'êtes pas à l'origine de cette demande, ignorez simplement cet e-mail.</p>
                         <p>L'équipe SAE</p>";
 
-                    $mail->AltBody = "{$salutation}\n\nVous avez demandé à réinitialiser votre mot de passe. Cliquez sur le lien ci-dessous :\n{$lien}\n\nSi vous n'êtes pas à l'origine de cette demande, ignorez simplement cet e-mail.\n\nL'équipe SAE";
+                    $mail->AltBody = "{$salutation}\n\nVous avez demandé à réinitialiser votre mot de passe. Cliquez sur le lien ci-dessous :\n{$link}\n\nSi vous n'êtes pas à l'origine de cette demande, ignorez simplement cet e-mail.\n\nL'équipe SAE";
 
                     $mail->send();
                 } catch (PHPMailerException $e) {
@@ -180,10 +183,11 @@ final class LoginController extends Controller
                 }
             }
 
+            // même message dans tous les cas pour ne pas dire qui est inscrit
             $message = 'Si ce compte existe bien, un email a été envoyé.';
         }
 
-        $this->render('Auth/mot-de-passe-oublie', [
+        $this->render('Auth/forgotPassword', [
             'title'   => 'Mot de passe oublié',
             'message' => $message,
         ]);
@@ -208,8 +212,8 @@ final class LoginController extends Controller
             return;
         }
 
-        $password = (string) ($_POST['password'] ?? '');
-        $confirm = (string) ($_POST['password_confirm'] ?? '');
+        $password = (string) filter_input(INPUT_POST, 'password');
+        $confirm = (string) filter_input(INPUT_POST, 'password_confirm');
 
         if (strlen($password) < 8) {
             $this->renderReset('Le mot de passe doit faire au moins 8 caractères.', $token);
@@ -249,10 +253,10 @@ final class LoginController extends Controller
      */
     private function renderReset(string $erreur, string $token): void
     {
-        $this->render('Auth/reinitialiser', [
-            'title'  => 'Nouveau mot de passe',
-            'erreur' => $erreur,
-            'token'  => $token,
+        $this->render('Auth/resetPassword', [
+            'title' => 'Nouveau mot de passe',
+            'error' => $error,
+            'token' => $token,
         ]);
     }
 }
