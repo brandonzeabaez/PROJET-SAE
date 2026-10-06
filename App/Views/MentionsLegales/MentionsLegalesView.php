@@ -1,11 +1,33 @@
 <?php
+/**
+ * @file MentionsLegalesView.php
+ * @brief Vue affichant les mentions légales du site.
+ *
+ * Cette vue décrit l'éditeur du site, la gestion des données personnelles
+ * et les informations relatives à l'utilisation des sessions.
+ *
+ * @author Brandon
+ * @author Aymen
+ * @author Ymen
+ * @author Milan
+ * @date 2026
+ */
 
 declare(strict_types=1);
 
 namespace App\Views\MentionsLegales;
 
+/**
+ * @brief Vue affichant les mentions légales du site.
+ *
+ * Cette vue décrit l'éditeur du site, la gestion des données personnelles
+ * et les informations relatives à l'utilisation des sessions.
+ */
 class MentionsLegalesView
 {
+    /**
+     * @brief Rendu HTML de la page des mentions légales.
+     */
     public function show(): void
     {
         ob_start();
