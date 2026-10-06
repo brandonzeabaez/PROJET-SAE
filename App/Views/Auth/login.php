@@ -14,6 +14,11 @@
             <p role="alert"><?= htmlspecialchars($error) ?></p>
         <?php endif; ?>
 
+        <?php // message de réussite (ex : mot de passe modifié) ?>
+        <?php if ($message !== '') : ?>
+            <p role="status"><?= htmlspecialchars($message) ?></p>
+        <?php endif; ?>
+
         <?php // envoie email et mdp en POST vers /connexion ?>
         <form action="/connexion" method="post">
             <div class="field">
@@ -40,3 +45,4 @@
 
     <?php endif; ?>
 </section>
+

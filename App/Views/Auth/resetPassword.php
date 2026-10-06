@@ -8,7 +8,7 @@
 
     <?php // affiche formulaire si le lien est valide ?>
     <?php if ($token !== '') : ?>
-        <p>8 caractères minimum, avec au moins une majuscule et une minuscule.</p>
+        <p>8 caractères minimum, avec une majuscule, un chiffre et un caractère spécial (@ $ ! % * ? &amp;).</p>
 
         <?php // le code reste dans l'adresse pour savoir de quel compte c'est  à l'envoi ?>
         <form action="/reinitialiser?token=<?= htmlspecialchars($token) ?>" method="post">
@@ -36,3 +36,4 @@
         <a href="/connexion">Retour à la connexion</a>
     </p>
 </section>
+
