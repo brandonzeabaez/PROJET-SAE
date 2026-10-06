@@ -1,6 +1,8 @@
 # PROJET-SAE
 
-> Courte description du projet.
+Bourse d'échange est un site Web réalisé dans le cadre de la SAÉ du semestre 3 à l'IUT d'Aix-Marseille Université. Il permet de donner une seconde vie au matériel de l'IUT, simplement et localement : les membres publient du matériel dont ils n'ont plus besoin, et d'autres peuvent le réserver.
+
+Le site est développé en PHP orienté objet avec une architecture MVC (routeur, contrôleurs, modèles, vues) et une base de données MySQL utilisée via PDO et des requêtes préparées. Il comprend une partie publique (accueil, inscription, connexion, mot de passe oublié, mentions légales) et un espace membre. La sécurité suit les recommandations de l'OWASP : mots de passe hachés, sessions, protection contre l'injection SQL et le XSS, lien de réinitialisation à usage unique envoyé par e-mail.
 
 ## Prérequis
 
