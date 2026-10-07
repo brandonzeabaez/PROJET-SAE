@@ -55,6 +55,8 @@ class InscriptionController {
             $this->view->showForm('Le mail saisi est invalide ou est déjà utilisé');
             return;
         }
+
+        $this->envoyerMailConfirmation($this->vals['email'], $this->vals['prenom']);
         header('Location: /connexion');
         exit;
     }
