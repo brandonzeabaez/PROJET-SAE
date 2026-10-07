@@ -137,8 +137,10 @@ final class LoginController extends Controller
                 $token = bin2hex(random_bytes(32));
                 $userModel->saveResetToken((int) $user['id_user'], $token);
 
-                $appUrl = rtrim($_ENV['APP_URL'] ?? 'http://localhost:8000', '/');
-                $link = $appUrl . '/reinitialiser?token=' . $token;
+                $appUrl = rtrim($_ENV['APP_URL'] ?? 'https://masae2026.alwaysdata.net/', '/');
+                $lien = $appUrl . '/reinitialiser?token=' . $token;
+
+                error_log("Test identifiants : Utilisateur=[" . $_ENV['MAIL_USERNAME'] . "] MdP longueur=" . strlen($_ENV['MAIL_PASSWORD'] ?? ''));
 
                 $mail = new PHPMailer(true);
                 try {
