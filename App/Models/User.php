@@ -8,7 +8,7 @@
  *
  * @author Brandon
  * @author Aymen
- * @author Ymen
+ * @author Imen
  * @author Milan
  * @date 2026
  */
@@ -36,7 +36,8 @@ final class User extends Model
      */
     public function findByEmail(string $email): ?array
     {
-        $sql = 'SELECT id_user, email, mot_de_passe FROM User WHERE email = :email LIMIT 1';
+        // prenom sert à dire « Bonjour {prénom} » dans le mail
+        $sql = 'SELECT id_user, email, mot_de_passe, prenom FROM User WHERE email = :email LIMIT 1';
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue('email', $email, PDO::PARAM_STR);
         $stmt->execute();
