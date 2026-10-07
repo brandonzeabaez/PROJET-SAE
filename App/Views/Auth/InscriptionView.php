@@ -1,13 +1,13 @@
 <?php
 namespace App\Views\Auth;
-use App\Content\Enums\countriesEnum;
+use App\Content\Enums\CountriesEnum;
     class InscriptionView {
         function showForm(?string $error = null): void {
             ob_start();
             echo '<div class="card form-card">';
             echo '<h1>Inscription</h1>';
             if (isset($error)) {
-                echo '<div><p>' . $error . '</p></div>';
+                echo '<div><p>' . htmlspecialchars($error) . '</p></div>';
             }
             echo '<form method="POST" action="/inscription">';
             echo '<div><label for="nom">Nom</label>';
@@ -18,8 +18,8 @@ use App\Content\Enums\countriesEnum;
             echo '<select id="pays" name="pays" required>';
             echo '<option value=""> Choisir un pays </option>';
 
-            foreach(countriesEnum::cases() as $country) {
-                echo '<option value="' . $country->value . '">' . $country->name . '</option>';
+            foreach(CountriesEnum::cases() as $country) {
+                echo '<option name=pays" value="' . $country->value . '">' . $country->name . '</option>';
             }
 
             echo '</select></div>';
