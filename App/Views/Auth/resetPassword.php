@@ -15,8 +15,11 @@
             <div class="field">
                 <label for="password">Nouveau mot de passe</label>
                 <?php //  navigateur propose un mdp solide ?>
+                <?php // vérif navigateur, le serveur revérifie (sécurité) ?>
                 <input type="password" id="password" name="password"
-                       minlength="8" autocomplete="new-password" required>
+                       minlength="8" autocomplete="new-password" required
+                       pattern="(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&]).{8,}"
+                       title="8 caractères minimum, avec une majuscule, un chiffre et un caractère spécial (@ $ ! % * ? &amp;)">
             </div>
 
             <div class="field">
@@ -36,4 +39,3 @@
         <a href="/connexion">Retour à la connexion</a>
     </p>
 </section>
-
