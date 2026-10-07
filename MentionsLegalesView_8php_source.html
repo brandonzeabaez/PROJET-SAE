@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Projet SAÉ:  Fichier source de App/Views/MentionsLegales/MentionsLegalesView.php</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Projet SAÉ
+   </div>
+   <div id="projectbrief">Documentation du projet</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Recherche" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('MentionsLegalesView_8php_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">MentionsLegalesView.php</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="MentionsLegalesView_8php.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span>&lt;?php</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>declare(strict_types=1);</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="namespaceApp_1_1Views_1_1MentionsLegales.html">   18</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceApp_1_1Views_1_1MentionsLegales.html">App\Views\MentionsLegales</a>;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span></div>
+<div class="foldopen" id="foldopen00026" data-start="{" data-end="};">
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classApp_1_1Views_1_1MentionsLegales_1_1MentionsLegalesView.html">   26</a></span><span class="keyword">class </span><a class="code hl_class" href="classApp_1_1Views_1_1MentionsLegales_1_1MentionsLegalesView.html">MentionsLegalesView</a></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>{</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="classApp_1_1Views_1_1MentionsLegales_1_1MentionsLegalesView.html#a2c07d518eaad85800d75323c5b9f6319">   31</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="classApp_1_1Views_1_1MentionsLegales_1_1MentionsLegalesView.html#a2c07d518eaad85800d75323c5b9f6319">show</a>(): void</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    {</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        ob_start();</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        ?&gt;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        &lt;div <span class="keyword">class</span>=<span class="stringliteral">&quot;mentions&quot;</span>&gt;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            &lt;h1&gt;Mentions légales&lt;/h1&gt;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            &lt;h2&gt;Éditeur du site&lt;/h2&gt;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            &lt;p&gt;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                Ce site est réalisé dans le cadre d<span class="stringliteral">&#39;un projet pédagogique (SAE)</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="stringliteral">                à l&#39;</span>IUT d<span class="stringliteral">&#39;Aix-Marseille Université.</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="stringliteral">                &lt;br&gt;</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="stringliteral">                Contact : sae30392@gmail.com</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="stringliteral">            &lt;/p&gt;</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="stringliteral">            &lt;h2&gt;Données personnelles&lt;/h2&gt;</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="stringliteral">            &lt;p&gt;</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="stringliteral">                Les informations saisies lors de l&#39;</span>inscription (nom, prénom, pays,</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                adresse e-mail) servent uniquement à la gestion des comptes du site.</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                Le mot de passe est stocké sous forme chiffrée. Conformément au RGPD,</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                vous pouvez demander l<span class="stringliteral">&#39;accès la modification ou la suppression de</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="stringliteral">                vos données en écrivant à l&#39;</span>adresse de contact ci-dessus.</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            &lt;/p&gt;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            &lt;h2&gt;Cookies et session&lt;/h2&gt;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            &lt;p&gt;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                Le site utilise uniquement une session pour gérer la</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                connexion, aucun cookie publicitaire ou de suivi n<span class="stringliteral">&#39;est utilisé.</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="stringliteral">            &lt;/p&gt;</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="stringliteral">        &lt;/div&gt;</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="stringliteral">        &lt;?php</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="stringliteral">        $content = ob_get_clean();</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="stringliteral">        $title = &#39;</span>Mentions légales<span class="stringliteral">&#39;;</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="stringliteral">        $description = &#39;</span>Mentions légales du site<span class="stringliteral">&#39;;</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="stringliteral">        require __DIR__ . &#39;</span>/../layout.php<span class="stringliteral">&#39;;</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="stringliteral">    }</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="stringliteral">}</span></div>
+</div>
+<div class="ttc" id="aclassApp_1_1Views_1_1MentionsLegales_1_1MentionsLegalesView_html"><div class="ttname"><a href="classApp_1_1Views_1_1MentionsLegales_1_1MentionsLegalesView.html">App\Views\MentionsLegales\MentionsLegalesView</a></div><div class="ttdoc">Vue affichant les mentions légales du site.</div><div class="ttdef"><b>Définition</b> <a href="#l00026">MentionsLegalesView.php:27</a></div></div>
+<div class="ttc" id="aclassApp_1_1Views_1_1MentionsLegales_1_1MentionsLegalesView_html_a2c07d518eaad85800d75323c5b9f6319"><div class="ttname"><a href="classApp_1_1Views_1_1MentionsLegales_1_1MentionsLegalesView.html#a2c07d518eaad85800d75323c5b9f6319">App\Views\MentionsLegales\MentionsLegalesView\show</a></div><div class="ttdeci">show()</div><div class="ttdoc">Rendu HTML de la page des mentions légales.</div><div class="ttdef"><b>Définition</b> <a href="#l00031">MentionsLegalesView.php:31</a></div></div>
+<div class="ttc" id="anamespaceApp_1_1Views_1_1MentionsLegales_html"><div class="ttname"><a href="namespaceApp_1_1Views_1_1MentionsLegales.html">App\Views\MentionsLegales</a></div><div class="ttdef"><b>Définition</b> <a href="#l00018">MentionsLegalesView.php:18</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_b1617d756d2224e91d37255e84e89ba2.html">App</a></li><li class="navelem"><a href="dir_ad8da2c224e1684e0e78a81a98c36b6c.html">Views</a></li><li class="navelem"><a href="dir_c0926024c2b785feb59d35bf6173b362.html">MentionsLegales</a></li><li class="navelem"><a href="MentionsLegalesView_8php.html">MentionsLegalesView.php</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>

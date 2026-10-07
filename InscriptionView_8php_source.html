@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Projet SAÉ:  Fichier source de App/Views/Auth/InscriptionView.php</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Projet SAÉ
+   </div>
+   <div id="projectbrief">Documentation du projet</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Recherche" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('InscriptionView_8php_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">InscriptionView.php</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="InscriptionView_8php.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span>&lt;?php</div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno"><a class="line" href="namespaceApp_1_1Views_1_1Auth.html">    2</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceApp_1_1Views_1_1Auth.html">App\Views\Auth</a>;</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span>use <a class="code hl_enumeration" href="namespaceApp_1_1Content_1_1Enums.html#a1f4c3b42cbee5f618a9892f0bba33a53">App\Content\Enums\CountriesEnum</a>;</div>
+<div class="foldopen" id="foldopen00004" data-start="{" data-end="};">
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="classApp_1_1Views_1_1Auth_1_1InscriptionView.html">    4</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classApp_1_1Views_1_1Auth_1_1InscriptionView.html">InscriptionView</a> {</div>
+<div class="foldopen" id="foldopen00005" data-start="{" data-end="}">
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="classApp_1_1Views_1_1Auth_1_1InscriptionView.html#a15e57fcef5675f7990549237a4cacf0e">    5</a></span>        <span class="keyword">function</span> <a class="code hl_function" href="classApp_1_1Views_1_1Auth_1_1InscriptionView.html#a15e57fcef5675f7990549237a4cacf0e">showForm</a>(?<span class="keywordtype">string</span> $error = <span class="keyword">null</span>): void {</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>            ob_start();</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>            echo <span class="stringliteral">&#39;&lt;div class=&quot;card form-card&quot;&gt;&#39;</span>;</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>            echo <span class="stringliteral">&#39;&lt;h1&gt;Inscription&lt;/h1&gt;&#39;</span>;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>            <span class="keywordflow">if</span> (isset($error)) {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>                echo <span class="stringliteral">&#39;&lt;div&gt;&lt;p&gt;&#39;</span> . htmlspecialchars($error) . <span class="stringliteral">&#39;&lt;/p&gt;&lt;/div&gt;&#39;</span>;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>            }</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>            echo <span class="stringliteral">&#39;&lt;form method=&quot;POST&quot; action=&quot;/inscription&quot;&gt;&#39;</span>;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>            echo <span class="stringliteral">&#39;&lt;div&gt;&lt;label for=&quot;nom&quot;&gt;Nom&lt;/label&gt;&#39;</span>;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>            echo <span class="stringliteral">&#39;&lt;input type=&quot;text&quot; id=&quot;nom&quot; name=&quot;nom&quot; required&gt;&lt;/div&gt;&#39;</span>;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>            echo <span class="stringliteral">&#39;&lt;div&gt;&lt;label for=&quot;prenom&quot;&gt;Prénom&lt;/label&gt;&#39;</span>;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>            echo <span class="stringliteral">&#39;&lt;input type=&quot;text&quot; id=&quot;prenom&quot; name=&quot;prenom&quot; required&gt;&lt;/div&gt;&#39;</span>;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>            echo <span class="stringliteral">&#39;&lt;div&gt;&lt;label for=&quot;pays&quot;&gt;Pays&lt;/label&gt;&#39;</span>;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>            echo <span class="stringliteral">&#39;&lt;select id=&quot;pays&quot; name=&quot;pays&quot; required&gt;&#39;</span>;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>            echo <span class="stringliteral">&#39;&lt;option value=&quot;&quot;&gt; Choisir un pays &lt;/option&gt;&#39;</span>;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>            <span class="keywordflow">foreach</span>(CountriesEnum::cases() as $country) {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>                echo <span class="stringliteral">&#39;&lt;option name=pays&quot; value=&quot;&#39;</span> . $country-&gt;value . <span class="stringliteral">&#39;&quot;&gt;&#39;</span> . $country-&gt;name . <span class="stringliteral">&#39;&lt;/option&gt;&#39;</span>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            }</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>            echo <span class="stringliteral">&#39;&lt;/select&gt;&lt;/div&gt;&#39;</span>;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>            echo <span class="stringliteral">&#39;&lt;div&gt;&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;&#39;</span>;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>            echo <span class="stringliteral">&#39;&lt;input type=&quot;email&quot; id=&quot;email&quot; name=&quot;email&quot; required&gt;&lt;/div&gt;&#39;</span>;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            echo <span class="stringliteral">&#39;&lt;div&gt;&lt;label for=&quot;password&quot;&gt;Mot de passe&lt;/label&gt;&#39;</span>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            echo <span class="stringliteral">&#39;&lt;input type=&quot;password&quot; id=&quot;password&quot; name=&quot;password&quot; required&gt;&#39;</span>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            echo <span class="stringliteral">&#39;&lt;div&gt;&lt;label for=&quot;password_confirmation&quot;&gt;Confirmation mot de passe&lt;/label&gt;&lt;/div&gt;&#39;</span>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>            echo <span class="stringliteral">&#39;&lt;input type=&quot;password&quot; id=&quot;password_confirmation&quot; name=&quot;password_confirmation&quot; required&gt;&lt;/div&gt;&#39;</span>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>            echo <span class="stringliteral">&#39;&lt;div&gt;&lt;button type=&quot;submit&quot; &gt;S\&#39;inscrire&lt;/button&gt;&lt;/div&gt;&#39;</span>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            echo <span class="stringliteral">&#39;&lt;/form&gt;&#39;</span>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            echo <span class="stringliteral">&#39;&lt;/div&gt;&#39;</span>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            $content = ob_get_clean();</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            $title = <span class="stringliteral">&#39;Inscription&#39;</span>;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            $description = <span class="stringliteral">&#39;Création de compte&#39;</span>;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            require __DIR__ . <span class="stringliteral">&#39;/../layout.php&#39;</span>;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        }</div>
+</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    }</div>
+</div>
+<div class="ttc" id="aclassApp_1_1Views_1_1Auth_1_1InscriptionView_html"><div class="ttname"><a href="classApp_1_1Views_1_1Auth_1_1InscriptionView.html">App\Views\Auth\InscriptionView</a></div><div class="ttdef"><b>Définition</b> <a href="#l00004">InscriptionView.php:4</a></div></div>
+<div class="ttc" id="aclassApp_1_1Views_1_1Auth_1_1InscriptionView_html_a15e57fcef5675f7990549237a4cacf0e"><div class="ttname"><a href="classApp_1_1Views_1_1Auth_1_1InscriptionView.html#a15e57fcef5675f7990549237a4cacf0e">App\Views\Auth\InscriptionView\showForm</a></div><div class="ttdeci">showForm(?string $error=null)</div><div class="ttdef"><b>Définition</b> <a href="#l00005">InscriptionView.php:5</a></div></div>
+<div class="ttc" id="anamespaceApp_1_1Content_1_1Enums_html_a1f4c3b42cbee5f618a9892f0bba33a53"><div class="ttname"><a href="namespaceApp_1_1Content_1_1Enums.html#a1f4c3b42cbee5f618a9892f0bba33a53">App\Content\Enums\CountriesEnum</a></div><div class="ttdeci">CountriesEnum</div><div class="ttdoc">Énumération des pays disponibles dans l&#39;application.</div><div class="ttdef"><b>Définition</b> <a href="CountriesEnum_8php_source.html#l00023">CountriesEnum.php:24</a></div></div>
+<div class="ttc" id="anamespaceApp_1_1Views_1_1Auth_html"><div class="ttname"><a href="namespaceApp_1_1Views_1_1Auth.html">App\Views\Auth</a></div><div class="ttdef"><b>Définition</b> <a href="#l00002">InscriptionView.php:2</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_b1617d756d2224e91d37255e84e89ba2.html">App</a></li><li class="navelem"><a href="dir_ad8da2c224e1684e0e78a81a98c36b6c.html">Views</a></li><li class="navelem"><a href="dir_4da1272e30b64efe313ec42c4eca80d0.html">Auth</a></li><li class="navelem"><a href="InscriptionView_8php.html">InscriptionView.php</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>

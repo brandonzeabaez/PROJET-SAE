@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Projet SAÉ:  Fichier source de App/Controllers/InscriptionController.php</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Projet SAÉ
+   </div>
+   <div id="projectbrief">Documentation du projet</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Recherche" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('InscriptionController_8php_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">InscriptionController.php</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="InscriptionController_8php.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span>&lt;?php</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>declare(strict_types=1);</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">namespace </span>App\Controllers;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>use App\Models\InscriptionModel;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>use App\Views\Auth\InscriptionView;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>use PHPMailer\PHPMailer\Exception;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>use PHPMailer\PHPMailer\PHPMailer;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span></div>
+<div class="foldopen" id="foldopen00027" data-start="{" data-end="};">
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classApp_1_1Controllers_1_1InscriptionController.html">   27</a></span><span class="keyword">class </span><a class="code hl_class" href="classApp_1_1Controllers_1_1InscriptionController.html">InscriptionController</a></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>{</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="classApp_1_1Controllers_1_1InscriptionController.html#ab94398888f085e26585b38174c69b634">   30</a></span>    <span class="keyword">private</span> <a class="code hl_class" href="classApp_1_1Views_1_1Auth_1_1InscriptionView.html">InscriptionView</a> <a class="code hl_variable" href="classApp_1_1Controllers_1_1InscriptionController.html#ab94398888f085e26585b38174c69b634">$view</a>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classApp_1_1Controllers_1_1InscriptionController.html#a4f2b3d0de91cd565fc69f0da8fe89310">   33</a></span>    <span class="keyword">private</span> <a class="code hl_class" href="classApp_1_1Models_1_1InscriptionModel.html">InscriptionModel</a> <a class="code hl_variable" href="classApp_1_1Controllers_1_1InscriptionController.html#a4f2b3d0de91cd565fc69f0da8fe89310">$model</a>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classApp_1_1Controllers_1_1InscriptionController.html#a756414eb030aa090fb7496d16816ac5a">   36</a></span>    <span class="keyword">private</span> <span class="keyword">const</span> <a class="code hl_variable" href="classApp_1_1Controllers_1_1InscriptionController.html#a756414eb030aa090fb7496d16816ac5a">REGEX_PASSWORD</a> = <span class="stringliteral">&#39;/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&amp;])[A-Za-z\d@$!%*?&amp;]{8,}$/&#39;</span>;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="classApp_1_1Controllers_1_1InscriptionController.html#a83a756c17226161e8a07f9465fb244e1">   39</a></span>    <span class="keyword">private</span> array <a class="code hl_variable" href="classApp_1_1Controllers_1_1InscriptionController.html#a83a756c17226161e8a07f9465fb244e1">$vals</a>;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span></div>
+<div class="foldopen" id="foldopen00044" data-start="{" data-end="}">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classApp_1_1Controllers_1_1InscriptionController.html#abe9e76190b54a04435f5933f966bc6ff">   44</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="classApp_1_1Controllers_1_1InscriptionController.html#abe9e76190b54a04435f5933f966bc6ff">__construct</a>()</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        $this-&gt;view = <span class="keyword">new</span> <a class="code hl_class" href="classApp_1_1Views_1_1Auth_1_1InscriptionView.html">InscriptionView</a>();</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    }</div>
+</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span></div>
+<div class="foldopen" id="foldopen00054" data-start="{" data-end="}">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classApp_1_1Controllers_1_1InscriptionController.html#aaba1f1055cd9cdc9885fa644586aa355">   54</a></span>    <span class="keyword">public</span> <span class="keyword">function</span> <a class="code hl_function" href="classApp_1_1Controllers_1_1InscriptionController.html#aaba1f1055cd9cdc9885fa644586aa355">execute</a>(): void</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    {</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="keywordflow">if</span> ($_SERVER[<span class="stringliteral">&quot;REQUEST_METHOD&quot;</span>] !== <span class="stringliteral">&quot;POST&quot;</span>) {</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            $this-&gt;<a class="code hl_function" href="classApp_1_1Controllers_1_1InscriptionController.html#a3512d64cd815a9a279187406d588313e">getShowForm</a>();</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        }</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        $this-&gt;<a class="code hl_function" href="classApp_1_1Controllers_1_1InscriptionController.html#a800d114250f88e4b1cfcc28cddbef1dd">handlePost</a>();</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        exit;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    }</div>
+</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span></div>
+<div class="foldopen" id="foldopen00068" data-start="{" data-end="}">
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="classApp_1_1Controllers_1_1InscriptionController.html#a3512d64cd815a9a279187406d588313e">   68</a></span>    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code hl_function" href="classApp_1_1Controllers_1_1InscriptionController.html#a3512d64cd815a9a279187406d588313e">getShowForm</a>(): void</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        $this-&gt;view-&gt;showForm();</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    }</div>
+</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span></div>
+<div class="foldopen" id="foldopen00078" data-start="{" data-end="}">
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="classApp_1_1Controllers_1_1InscriptionController.html#a90e69eebfb96a5b1f6840cbfdaafcea0">   78</a></span>    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code hl_function" href="classApp_1_1Controllers_1_1InscriptionController.html#a90e69eebfb96a5b1f6840cbfdaafcea0">passwordValidation</a>(): bool</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    {</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keywordflow">return</span> preg_match(self::REGEX_PASSWORD, $_POST[<span class="stringliteral">&#39;password&#39;</span>]) &amp;&amp; ($_POST[<span class="stringliteral">&#39;password&#39;</span>] === $_POST[<span class="stringliteral">&#39;password_confirmation&#39;</span>]);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    }</div>
+</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span></div>
+<div class="foldopen" id="foldopen00086" data-start="{" data-end="}">
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="classApp_1_1Controllers_1_1InscriptionController.html#a800d114250f88e4b1cfcc28cddbef1dd">   86</a></span>    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code hl_function" href="classApp_1_1Controllers_1_1InscriptionController.html#a800d114250f88e4b1cfcc28cddbef1dd">handlePost</a>(): void</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    {</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="keywordflow">if</span> (!$this-&gt;<a class="code hl_function" href="classApp_1_1Controllers_1_1InscriptionController.html#a90e69eebfb96a5b1f6840cbfdaafcea0">passwordValidation</a>()) {</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            $this-&gt;view-&gt;showForm(<span class="stringliteral">&#39;Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial (@ $ ! % * ? &amp;), et les deux saisies doivent être identiques.&#39;</span>);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        }</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        $this-&gt;vals = [</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            <span class="stringliteral">&#39;email&#39;</span> =&gt; $_POST[<span class="stringliteral">&#39;email&#39;</span>],</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            <span class="stringliteral">&#39;mot_de_passe&#39;</span> =&gt; password_hash($_POST[<span class="stringliteral">&#39;password&#39;</span>], PASSWORD_DEFAULT),</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            <span class="stringliteral">&#39;nom&#39;</span> =&gt; $_POST[<span class="stringliteral">&#39;nom&#39;</span>],</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            <span class="stringliteral">&#39;prenom&#39;</span> =&gt; $_POST[<span class="stringliteral">&#39;prenom&#39;</span>],</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            <span class="stringliteral">&#39;pays&#39;</span> =&gt; $_POST[<span class="stringliteral">&#39;pays&#39;</span>],</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        ];</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        $this-&gt;<a class="code hl_function" href="classApp_1_1Controllers_1_1InscriptionController.html#a25531a7e5ed57da7da6a1143e24ee8ff">sendForm</a>();</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    }</div>
+</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span></div>
+<div class="foldopen" id="foldopen00110" data-start="{" data-end="}">
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="classApp_1_1Controllers_1_1InscriptionController.html#a25531a7e5ed57da7da6a1143e24ee8ff">  110</a></span>    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code hl_function" href="classApp_1_1Controllers_1_1InscriptionController.html#a25531a7e5ed57da7da6a1143e24ee8ff">sendForm</a>(): void</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    {</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keywordflow">try</span> {</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            $this-&gt;model = <span class="keyword">new</span> <a class="code hl_class" href="classApp_1_1Models_1_1InscriptionModel.html">InscriptionModel</a>($this-&gt;vals);</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            $this-&gt;model-&gt;sendFormToDB();</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        } <span class="keywordflow">catch</span> (\PDOException $e) {</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            error_log($e-&gt;getMessage());</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            $this-&gt;view-&gt;showForm(<span class="stringliteral">&#39;Le mail saisi est invalide ou est déjà utilisé&#39;</span>);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        }</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        $this-&gt;<a class="code hl_function" href="classApp_1_1Controllers_1_1InscriptionController.html#ac73244b279e62e696e89347b6d9bda6a">envoyerMailConfirmation</a>($this-&gt;vals[<span class="stringliteral">&#39;email&#39;</span>], $this-&gt;vals[<span class="stringliteral">&#39;prenom&#39;</span>]);</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        header(<span class="stringliteral">&#39;Location: /connexion&#39;</span>);</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        exit;</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    }</div>
+</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span></div>
+<div class="foldopen" id="foldopen00132" data-start="{" data-end="}">
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="classApp_1_1Controllers_1_1InscriptionController.html#ac73244b279e62e696e89347b6d9bda6a">  132</a></span>    <span class="keyword">private</span> <span class="keyword">function</span> <a class="code hl_function" href="classApp_1_1Controllers_1_1InscriptionController.html#ac73244b279e62e696e89347b6d9bda6a">envoyerMailConfirmation</a>(<span class="keywordtype">string</span> $email, <span class="keywordtype">string</span> $prenom): void</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    {</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        $mail = <span class="keyword">new</span> PHPMailer(<span class="keyword">true</span>);</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        <span class="keywordflow">try</span> {</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>            $mail-&gt;isSMTP();</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            $mail-&gt;Host       = <span class="stringliteral">&#39;smtp.gmail.com&#39;</span>;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>            $mail-&gt;SMTPAuth   = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            $mail-&gt;Username   = $_ENV[<span class="stringliteral">&#39;MAIL_USERNAME&#39;</span>];</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            $mail-&gt;Password   = $_ENV[<span class="stringliteral">&#39;MAIL_PASSWORD&#39;</span>];</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>            $mail-&gt;SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>            $mail-&gt;Port       = 465;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>            $mail-&gt;CharSet    = PHPMailer::CHARSET_UTF8;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            $mail-&gt;setFrom($_ENV[<span class="stringliteral">&#39;MAIL_USERNAME&#39;</span>], <span class="stringliteral">&#39;SAE&#39;</span>);</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>            $mail-&gt;addAddress($email, $prenom);</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>            $prenomHtml = htmlspecialchars($prenom);</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>            $mail-&gt;isHTML(<span class="keyword">true</span>);</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>            $mail-&gt;Subject = <span class="stringliteral">&#39;Confirmation de votre inscription&#39;</span>;</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>            $mail-&gt;Body    = <span class="stringliteral">&quot;&lt;p&gt;Bonjour $prenomHtml,&lt;/p&gt;</span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="stringliteral">                &lt;p&gt;Votre inscription a bien été prise en compte. Vous pouvez dès maintenant vous connecter avec votre adresse e-mail.&lt;/p&gt;</span></div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="stringliteral">                &lt;p&gt;L&#39;équipe SAE&lt;/p&gt;&quot;</span>;</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>            $mail-&gt;AltBody = <span class="stringliteral">&quot;Bonjour $prenom,\n\nVotre inscription a bien été prise en compte. &quot;</span></div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>                . <span class="stringliteral">&quot;Vous pouvez dès maintenant vous connecter avec votre adresse e-mail.\n\nL&#39;équipe SAE&quot;</span>;</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>            $mail-&gt;send();</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        } <span class="keywordflow">catch</span> (Exception $e) {</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            error_log(<span class="stringliteral">&#39;Mail de confirmation non envoyé : &#39;</span> . $mail-&gt;ErrorInfo);</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        }</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    }</div>
+</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>}</div>
+</div>
+<div class="ttc" id="aclassApp_1_1Controllers_1_1InscriptionController_html"><div class="ttname"><a href="classApp_1_1Controllers_1_1InscriptionController.html">App\Controllers\InscriptionController</a></div><div class="ttdoc">Gère le flux d&#39;inscription de l&#39;utilisateur.</div><div class="ttdef"><b>Définition</b> <a href="#l00027">InscriptionController.php:28</a></div></div>
+<div class="ttc" id="aclassApp_1_1Controllers_1_1InscriptionController_html_a25531a7e5ed57da7da6a1143e24ee8ff"><div class="ttname"><a href="classApp_1_1Controllers_1_1InscriptionController.html#a25531a7e5ed57da7da6a1143e24ee8ff">App\Controllers\InscriptionController\sendForm</a></div><div class="ttdeci">sendForm()</div><div class="ttdoc">Enregistre l&#39;utilisateur dans la base de données.</div><div class="ttdef"><b>Définition</b> <a href="#l00110">InscriptionController.php:110</a></div></div>
+<div class="ttc" id="aclassApp_1_1Controllers_1_1InscriptionController_html_a3512d64cd815a9a279187406d588313e"><div class="ttname"><a href="classApp_1_1Controllers_1_1InscriptionController.html#a3512d64cd815a9a279187406d588313e">App\Controllers\InscriptionController\getShowForm</a></div><div class="ttdeci">getShowForm()</div><div class="ttdoc">Affiche le formulaire d&#39;inscription.</div><div class="ttdef"><b>Définition</b> <a href="#l00068">InscriptionController.php:68</a></div></div>
+<div class="ttc" id="aclassApp_1_1Controllers_1_1InscriptionController_html_a4f2b3d0de91cd565fc69f0da8fe89310"><div class="ttname"><a href="classApp_1_1Controllers_1_1InscriptionController.html#a4f2b3d0de91cd565fc69f0da8fe89310">App\Controllers\InscriptionController\$model</a></div><div class="ttdeci">InscriptionModel $model</div><div class="ttdef"><b>Définition</b> <a href="#l00033">InscriptionController.php:33</a></div></div>
+<div class="ttc" id="aclassApp_1_1Controllers_1_1InscriptionController_html_a756414eb030aa090fb7496d16816ac5a"><div class="ttname"><a href="classApp_1_1Controllers_1_1InscriptionController.html#a756414eb030aa090fb7496d16816ac5a">App\Controllers\InscriptionController\REGEX_PASSWORD</a></div><div class="ttdeci">const REGEX_PASSWORD</div><div class="ttdef"><b>Définition</b> <a href="#l00036">InscriptionController.php:36</a></div></div>
+<div class="ttc" id="aclassApp_1_1Controllers_1_1InscriptionController_html_a800d114250f88e4b1cfcc28cddbef1dd"><div class="ttname"><a href="classApp_1_1Controllers_1_1InscriptionController.html#a800d114250f88e4b1cfcc28cddbef1dd">App\Controllers\InscriptionController\handlePost</a></div><div class="ttdeci">handlePost()</div><div class="ttdoc">Traite la soumission du formulaire d&#39;inscription.</div><div class="ttdef"><b>Définition</b> <a href="#l00086">InscriptionController.php:86</a></div></div>
+<div class="ttc" id="aclassApp_1_1Controllers_1_1InscriptionController_html_a83a756c17226161e8a07f9465fb244e1"><div class="ttname"><a href="classApp_1_1Controllers_1_1InscriptionController.html#a83a756c17226161e8a07f9465fb244e1">App\Controllers\InscriptionController\$vals</a></div><div class="ttdeci">array $vals</div><div class="ttdef"><b>Définition</b> <a href="#l00039">InscriptionController.php:39</a></div></div>
+<div class="ttc" id="aclassApp_1_1Controllers_1_1InscriptionController_html_a90e69eebfb96a5b1f6840cbfdaafcea0"><div class="ttname"><a href="classApp_1_1Controllers_1_1InscriptionController.html#a90e69eebfb96a5b1f6840cbfdaafcea0">App\Controllers\InscriptionController\passwordValidation</a></div><div class="ttdeci">passwordValidation()</div><div class="ttdoc">Vérifie la validité du mot de passe et de la confirmation.</div><div class="ttdef"><b>Définition</b> <a href="#l00078">InscriptionController.php:78</a></div></div>
+<div class="ttc" id="aclassApp_1_1Controllers_1_1InscriptionController_html_aaba1f1055cd9cdc9885fa644586aa355"><div class="ttname"><a href="classApp_1_1Controllers_1_1InscriptionController.html#aaba1f1055cd9cdc9885fa644586aa355">App\Controllers\InscriptionController\execute</a></div><div class="ttdeci">execute()</div><div class="ttdoc">Point d&#39;entrée du contrôleur d&#39;inscription.</div><div class="ttdef"><b>Définition</b> <a href="#l00054">InscriptionController.php:54</a></div></div>
+<div class="ttc" id="aclassApp_1_1Controllers_1_1InscriptionController_html_ab94398888f085e26585b38174c69b634"><div class="ttname"><a href="classApp_1_1Controllers_1_1InscriptionController.html#ab94398888f085e26585b38174c69b634">App\Controllers\InscriptionController\$view</a></div><div class="ttdeci">InscriptionView $view</div><div class="ttdef"><b>Définition</b> <a href="#l00030">InscriptionController.php:30</a></div></div>
+<div class="ttc" id="aclassApp_1_1Controllers_1_1InscriptionController_html_abe9e76190b54a04435f5933f966bc6ff"><div class="ttname"><a href="classApp_1_1Controllers_1_1InscriptionController.html#abe9e76190b54a04435f5933f966bc6ff">App\Controllers\InscriptionController\__construct</a></div><div class="ttdeci">__construct()</div><div class="ttdoc">Initialise la vue du formulaire d&#39;inscription.</div><div class="ttdef"><b>Définition</b> <a href="#l00044">InscriptionController.php:44</a></div></div>
+<div class="ttc" id="aclassApp_1_1Controllers_1_1InscriptionController_html_ac73244b279e62e696e89347b6d9bda6a"><div class="ttname"><a href="classApp_1_1Controllers_1_1InscriptionController.html#ac73244b279e62e696e89347b6d9bda6a">App\Controllers\InscriptionController\envoyerMailConfirmation</a></div><div class="ttdeci">envoyerMailConfirmation(string $email, string $prenom)</div><div class="ttdoc">Envoie un e-mail de confirmation à l&#39;utilisateur inscrit.</div><div class="ttdef"><b>Définition</b> <a href="#l00132">InscriptionController.php:132</a></div></div>
+<div class="ttc" id="aclassApp_1_1Models_1_1InscriptionModel_html"><div class="ttname"><a href="classApp_1_1Models_1_1InscriptionModel.html">App\Models\InscriptionModel</a></div><div class="ttdoc">Modèle de gestion de l&#39;inscription des utilisateurs.</div><div class="ttdef"><b>Définition</b> <a href="InscriptionModel_8php_source.html#l00012">InscriptionModel.php:13</a></div></div>
+<div class="ttc" id="aclassApp_1_1Views_1_1Auth_1_1InscriptionView_html"><div class="ttname"><a href="classApp_1_1Views_1_1Auth_1_1InscriptionView.html">App\Views\Auth\InscriptionView</a></div><div class="ttdef"><b>Définition</b> <a href="InscriptionView_8php_source.html#l00004">InscriptionView.php:4</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_b1617d756d2224e91d37255e84e89ba2.html">App</a></li><li class="navelem"><a href="dir_2d1f325e31c4dbf7fbf9bdc1a5eb440d.html">Controllers</a></li><li class="navelem"><a href="InscriptionController_8php.html">InscriptionController.php</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>
