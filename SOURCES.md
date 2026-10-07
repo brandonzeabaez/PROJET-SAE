@@ -14,6 +14,9 @@
 | Doxygen : génération de documentation PHP | Vidéo (YouTube) | [youtube.com](https://www.youtube.com/watch?v=-mid_0tUMeQ) |
 | Expressions régulières (regex) en PHP | Article de blog | [blog.crea-troyes.fr](https://blog.crea-troyes.fr/6403/regex-php-guide-complet-les-10-regex-les-plus-utilisees/) |
 | Messages flash | Vidéo (YouTube) | [youtube.com](https://www.youtube.com/watch?v=YOowArgPkQc&t=52s) |
+| Héberger le site| Vidéo (YouTube) | [youtube.com](https://www.youtube.com/watch?v=SmIdDn86i5M) |
+| Comment utiliser Phpmailer| Vidéo (YouTube) | [youtube.com](https://www.youtube.com/watch?v=5gvogp9zGn8) |
+| Repo Phpmailer| Github| [github.com](https://github.com/phpmailer/phpmailer) |
 
 ## Liste des prompts
 | Tâche | Outil | Prompt (résumé) | Solution proposée | Prise de décision |
@@ -34,3 +37,4 @@
 | Explication d'une vidéo Anglaise | Claude | https://www.youtube.com/watch?v=6ERdu4k62wI explication | Compréhension de plusieurs principes | Ca m'a aidé dans la compréhension et j'ai appliqué certaines choses |
 | Comprendre la différence entre show() et render() | Claude | Différence show() et render() pour le layout | Même principe, render() unique et show() depuis chaque vue | J'ai utilisé show() même si render() a été utilisé par d'autres membres |
 | Faire le README | Claude | Faire un Readme pour installer le projet et pouvoir développer | https://claude.ai/share/7ce2810a-615f-4d55-a16e-cdccf5501ff2 | implémentation dans le readme |
+| Implementation de PhpMailer| Gemini |https://share.gemini.google/4NKVuMZ8xsUn|
