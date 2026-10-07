@@ -118,6 +118,7 @@ class InscriptionController
             return;
         }
 
+        $this->envoyerMailConfirmation($this->vals['email'], $this->vals['prenom']);
         header('Location: /connexion');
         exit;
     }
