@@ -1,18 +1,112 @@
 # PROJET-SAE
-| Tâche | Outil | Prompt (résumé) | Solution proposée | Prise de décision |
-|---|---|---|---|---|
-| Autoload du Router | Claude | Erreur `Class "App\Core\Router" not found` | 🧩 Autoloader Composer PSR-4 (`"App\\": "App/"`) + `require vendor/autoload.php`<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 | ✅ ça a été implémenter suivi de recherche sur internet vidéo yt |
-| Autoload des contrôleurs | Claude | Les contrôleurs des routes ne sont pas chargés | 🧩 Utiliser le nom complet de classe (namespace) dans le Router<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 | ✅ débuggage comprendre pourquoi ça ne marchait pas |
-| Routes en JSON | Claude | Faire `routes.json` pour `InscriptionController` | 🧩 Clés `url` et `controller` cohérentes avec le code du Router<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 |  ❌ finalement on a pris un format json un peu plus simple pour le projet |
-| Composer | Claude | Que répondre à `composer init` avec un `composer.json` existant ? | 🧩 Un seul `composer.json`, ajouter le bloc `autoload` puis `composer dump-autoload`<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 | ✅  : Question sur les champs du fichier json géneré avec composer init  pouvait être mis sur le composer.json existant|
-| Page blanche | Claude | La page `/inscription` est blanche | 🧩 Le Router doit appeler `execute()`, le contrôleur doit afficher une vue<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 | ✅  : Débuggage pour savoir si le formulaire avait bien été envoyé |
-| GET / POST | Claude | Comprendre le flux du formulaire et la redirection | 🧩 `if ($_SERVER['REQUEST_METHOD'] !== 'POST')` + `return`, puis `header('Location: ...')` + `exit`<br><br>🔗 : https://claude.ai/chat/1a1dbbdd-da9c-473e-a7c3-4f8b2e77066+9 | ✅  : Comprendre pourquoi on utiliser cela dans le formulaire pour comprendre le workflow du formulaire en terme de requête  |
-| Erreur PDO HY093 | Claude | `Invalid parameter number` à l'insertion | 🧩 Placeholders nommés, clés de `$vals` identiques aux placeholders<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 | ✅  : Comprendre c'était quoi l'erreur que j'avais dans le modèle sur le formulaire dfinalement c'est que les placeholders en '?' posaiient problème lorsque qu'oon mettait un tableau associatif de plus les insert into il n'y avait pas tous les champs' |
-| Base de données MySQL | Claude | Trigger, `NOT NULL`, `UNIQUE`, `MODIFY COLUMN`, `AUTO_INCREMENT` | 🧩 `AUTO_INCREMENT` plutôt qu'un trigger, `VARCHAR(255)` pour le hash, les contraintes restent après `MODIFY`<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 | ✅ : c'était plus sur un choix de conception pour voir si on reprenait entièrement la LMD de la base de données ou si on modifiait le comportement pour pouvoir créer un utilisateur car il fallait un id et c'était plus simple et leger un autoincrement' |
-| Champs non envoyés | Claude | `Undefined array key "nom"` | 🧩 `name=\"..\"` dans une chaîne entre apostrophes : retirer les antislashs<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 | ✅  : Débuggage le name="$foo" étaient mal faits dans les balises input |
-| Debug | Claude | Afficher les erreurs dans le terminal et pas dans la page | 🧩 `error_log()` et `display_errors=0`<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 |  ❌ : ça n'a pas été implémenter finalement ' |
-| Layout | Claude | Où mettre favicon, meta et menu ? | 🧩 Un `layout.php` commun, les vues capturées avec `ob_start()` / `ob_get_clean()`<br><br>🔗 : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 |  ❌ : pas implémenter juste pour savoir s'il fallait le placer dans le layout et comment faire pour le mettre à chaque view avec la fonction ob_get_clean() mais pas implementer avec le prompt |
-| README | Claude | Géneration du README en markdown | est ce que tu peux me faire en markdown les prompts fait avec le lien dans le tableau sur cette conversation : https://claude.ai/share/eeebb246-6c8b-4c96-a23a-3a7f7f86faf9 | ✅ : implémenter dans le README à la racine du projet |
-| Erreur de dezoom css | Claude | Corriger l'extension de la carte en dezoom | Un sélecteur pour corriger ça | Application du sélecteur |
-| Explication d'une vidéo Anglaise | Claude | https://www.youtube.com/watch?v=6ERdu4k62wI explication | Compréhension de plusieurs principes | Ca m'a aidé dans la compréhension et j'ai appliqué certaines choses |
-| Comprendre la différence entre show() et render() | Claude | Différence show() et render() pour le layout | Même principe, render() unique et show() depuis chaque vue | J'ai utilisé show() même si render() a été utilisé par d'autres membres |
+
+Bourse d'échange est un site Web réalisé dans le cadre de la SAÉ du semestre 3 à l'IUT d'Aix-Marseille Université. Il permet de donner une seconde vie au matériel de l'IUT, simplement et localement : les membres publient du matériel dont ils n'ont plus besoin, et d'autres peuvent le réserver.
+
+Le site est développé en PHP orienté objet avec une architecture MVC (routeur, contrôleurs, modèles, vues) et une base de données MySQL utilisée via PDO et des requêtes préparées. Il comprend une partie publique (accueil, inscription, connexion, mot de passe oublié, mentions légales) et un espace membre. La sécurité suit les recommandations de l'OWASP : mots de passe hachés, sessions, protection contre l'injection SQL et le XSS, lien de réinitialisation à usage unique envoyé par e-mail.
+
+## Prérequis
+
+| Outil | Version |
+|---|---|
+| PHP | **8.1** |
+| Composer | 2.x (dernière version stable) |
+| MySQL | INNODB v11.4 (mariadb)  |
+
+### Vérifier la version de PHP
+
+```bash
+php -v
+```
+
+La sortie doit indiquer `PHP 8.1.x`. Si ce n'est pas le cas, installez PHP 8.1 avant de continuer.
+
+### Extensions PHP nécessaires
+
+Le projet utilise PDO pour se connecter à MySQL. Vérifiez que l'extension est activée :
+
+```bash
+php -m | grep -i pdo
+```
+
+Vous devez voir `PDO` et `pdo_mysql`. Sinon, activez-les dans votre `php.ini` (ligne `extension=pdo_mysql`).
+ 
+---
+
+## Installer Composer
+
+Composer est le gestionnaire de dépendances de PHP.
+
+### Windows
+
+1. Téléchargez et lancez l'installateur **Composer-Setup.exe** depuis [getcomposer.org/download](https://getcomposer.org/download/).
+2. Pendant l'installation, sélectionnez l'exécutable `php.exe` de votre PHP 8.1.
+3. Ouvrez un **nouveau** terminal et vérifiez :
+```bash
+composer --version
+```
+
+### Linux / macOS
+
+Dans un terminal :
+
+```bash
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+sudo mv composer.phar /usr/local/bin/composer
+```
+
+Puis vérifiez :
+
+```bash
+composer --version
+```
+
+> Pour plus de sécurité, la page [getcomposer.org/download](https://getcomposer.org/download/) fournit une commande de vérification du hash de l'installateur à exécuter avant `php composer-setup.php`.
+
+Sur macOS, vous pouvez aussi utiliser Homebrew : `brew install composer`.
+ 
+---
+
+## Installer le projet
+
+### 1. Cloner le dépôt
+
+```bash
+git clone <url-du-depot>
+cd <nom-du-projet>
+```
+
+### 2. Installer les dépendances
+
+```bash
+composer install
+```
+
+Cette commande lit le fichier `composer.lock` et installe exactement les mêmes versions des dépendances pour tous les développeurs, dans le dossier `vendor/`. Elle génère aussi l'autoloader (`vendor/autoload.php`).
+
+> ⚠️ Le dossier `vendor/` ne doit pas être versionné (il est dans `.gitignore`).
+
+### 3. Configurer l'environnement
+
+Copiez le fichier d'exemple et renseignez vos identifiants de base de données :
+
+```bash
+cp .env.example .env
+```
+
+> ⚠️ Le fichier `.env` contient des informations sensibles : ne le commitez jamais.
+ 
+---
+
+## Commandes Composer utiles
+
+| Commande | Rôle |
+|---|---|
+| `composer install` | Installe les dépendances listées dans `composer.lock` |
+| `composer require <paquet>` | Ajoute une nouvelle dépendance au projet |
+| `composer require --dev <paquet>` | Ajoute une dépendance de développement uniquement |
+| `composer update` | Met à jour les dépendances (modifie `composer.lock`, à faire avec précaution) |
+| `composer dump-autoload` | Régénère l'autoloader après l'ajout de nouvelles classes |
+
+Après un `composer require` ou un `composer update`, pensez à commiter **`composer.json` et `composer.lock`** pour que toute l'équipe ait les mêmes versions.

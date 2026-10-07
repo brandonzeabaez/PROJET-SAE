@@ -15,12 +15,14 @@ CREATE TABLE IF NOT EXISTS Permission(
 CREATE TABLE IF NOT EXISTS User(
    id_user INT AUTO_INCREMENT,
    email VARCHAR(50) UNIQUE NOT NULL,
-   mot_de_passe CHAR(50) NOT NULL,
+   mot_de_passe VARCHAR(255) NOT NULL,
    nom CHAR(50) NOT NULL,
    prenom CHAR(50) NOT NULL,
    telephone CHAR(16),
    pays CHAR(30),
    id_hierarchie INT DEFAULT 1,
+   reset_token VARCHAR(255) NULL,
+   reset_expire DATETIME NULL,
    CONSTRAINT pk_user_con PRIMARY KEY(id_user),
    CONSTRAINT fk_user_to_hierarchie_con FOREIGN KEY(id_hierarchie) REFERENCES Hierachie(id_hierarchie)
 );   
@@ -50,3 +52,4 @@ CREATE TABLE IF NOT EXISTS Reserve(
    CONSTRAINT fk_user_con FOREIGN KEY(id_user) REFERENCES User(id_user),
    FOREIGN KEY(id_publication) REFERENCES Publication(id_publication)
 );
+

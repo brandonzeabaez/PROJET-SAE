@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /deconnexion
+Disallow: /reinitialiser
+Disallow: /mot-de-passe-oublie
+Sitemap: https://masae2026.alwaysdata.net/sitemap.xml

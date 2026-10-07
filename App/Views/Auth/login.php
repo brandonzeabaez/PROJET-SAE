@@ -1,9 +1,4 @@
-<?php
-// valeurs vides si le contrôleur n'envoie rien
-$error ??= '';
-$submittedEmail ??= '';
-?>
-<main class="login-card">
+<section class="login-card">
     <h1>Connexion</h1>
 
     <?php // user connecté on affiche son email ?>
@@ -14,25 +9,28 @@ $submittedEmail ??= '';
 
     <?php else : ?>
 
-        <?php // message d'erreur seulement s'il y en a un ?>
+        <?php // message d'erreur si il y en a un ?>
         <?php if ($error !== '') : ?>
             <p role="alert"><?= htmlspecialchars($error) ?></p>
+        <?php endif; ?>
+
+        <?php // message de réussite (ex : mot de passe modifié) ?>
+        <?php if ($message !== '') : ?>
+            <p role="status"><?= htmlspecialchars($message) ?></p>
         <?php endif; ?>
 
         <?php // envoie email et mdp en POST vers /connexion ?>
         <form action="/connexion" method="post">
             <div class="field">
                 <label for="email">Adresse e-mail</label>
-                <?php // htmlspecialchars bloque les failles XSS ?>
                 <input type="email" id="email" name="email"
-                       value="<?= htmlspecialchars($submittedEmail) ?>"
                        placeholder="prenom.nom@example.com"
                        autocomplete="email" required>
             </div>
 
             <div class="field">
                 <label for="password">Mot de passe</label>
-                <?php // pas de minlength : on vérifie juste que le mdp correspond ?>
+                <?php // pas de minlength on vérifie juste que le mdp correspond ?>
                 <input type="password" id="password" name="password"
                        autocomplete="current-password" required>
             </div>
@@ -46,4 +44,5 @@ $submittedEmail ??= '';
         </p>
 
     <?php endif; ?>
-</main>
+</section>
+

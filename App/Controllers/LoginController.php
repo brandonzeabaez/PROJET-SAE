@@ -1,4 +1,17 @@
 <?php
+/**
+ * @file LoginController.php
+ * @brief Contrôleur principal de l'authentification et des mots de passe.
+ *
+ * Il gère les actions de connexion, déconnexion, mot de passe oublié et
+ * réinitialisation du mot de passe.
+ *
+ * @author Brandon
+ * @author Aymen
+ * @author Imen
+ * @author Milan
+ * @date 2026
+ */
 
 declare(strict_types=1);
 
@@ -6,17 +19,25 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\User;
-use PDOException;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
+/**
+ * @brief Contrôleur principal de l'authentification et des mots de passe.
+ *
+ * Il gère les actions de connexion, déconnexion, mot de passe oublié et
+ * réinitialisation du mot de passe.
+ */
 final class LoginController extends Controller
 {
-    
-
+    /**
+     * @brief Traite l'URL demandée et délègue vers la bonne action.
+     *
+     * Les routes prises en charge sont la connexion, la déconnexion, la
+     * récupération de mot de passe et son renouvellement.
+     */
     public function execute(): void
     {
-        // adresse demandée  connexion ou deconnexion
         $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
         if ($url === '/deconnexion') {
@@ -24,78 +45,71 @@ final class LoginController extends Controller
             return;
         }
 
-        // mdp oublié
         if ($url === '/mot-de-passe-oublie') {
-            $this->oublie();
+            $this->forgotPassword();
             return;
         }
 
-        // lien reçu par email nouveau mdp
         if ($url === '/reinitialiser') {
-            $this->reinitialiser();
+            $this->resetPassword();
             return;
         }
 
-        // formulaire  envoyé  vérif  connexion
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->login();
             return;
         }
-       
+
         $this->showLoginForm();
     }
 
-    
-    public function showLoginForm(): void
+    /**
+     * @brief Affiche le formulaire de connexion.
+     */
+    private function showLoginForm(): void
     {
+        // messages gardés en session avant la redirection, affichés une seule fois
+        $error = $_SESSION['error'] ?? '';
+        $message = $_SESSION['message'] ?? '';
+        unset($_SESSION['error'], $_SESSION['message']);
+
         $this->render('Auth/login', [
             'title'       => 'Connexion',
             'description' => 'Connectez-vous à votre espace membre du Projet SAÉ.',
+            'error'       => $error,
+            'message'     => $message,
         ]);
     }
 
-    // Vérifie email et mdp
-    public function login(): void
+    /**
+     * @brief Vérifie les identifiants saisis et ouvre une session utilisateur.
+     */
+    private function login(): void
     {
-        // On récupère ,donnée que l'user a tapé
-        $email = trim((string) ($_POST['email'] ?? ''));
-        $password = (string) ($_POST['password'] ?? '');
+        $email = trim((string) filter_input(INPUT_POST, 'email'));
+        $password = (string) filter_input(INPUT_POST, 'password');
 
-        
-        if ($email === '' || $password === '') {
-            $this->renderLoginError('Veuillez renseigner votre e-mail et votre mot de passe.', $email);
-            return;
+        $user = (new User())->findByEmail($email);
+
+        if ($user !== null && password_verify($password, $user['mot_de_passe'])) {
+            // nouvel identifiant de session : empêche le vol de session
+            session_regenerate_id(true);
+
+            $_SESSION['user_id'] = (int) $user['id_user'];
+            $_SESSION['user_email'] = $user['email'];
+        } else {
+            // même message si email ou mdp faux : on ne dit pas qui est inscrit
+            $_SESSION['error'] = 'Identifiants incorrects.';
         }
 
-        //  cherche l'user dans la base avec son email
-        try {
-            $user = (new User())->findByEmail($email);
-        } catch (PDOException $exception) {
-            // Message pour déboguer, à enlever quand le site sera en ligne !!
-            $this->renderLoginError('Base de données indisponible : ' . $exception->getMessage(), $email);
-            return;
-        }
-
-        // Email inconnu ou mauvais mdp  même message pour ne pas dire qui est inscrit
-        if ($user === null || !password_verify($password, $user['mot_de_passe'])) {
-            $this->renderLoginError('Identifiants incorrects.', $email);
-            return;
-        }
-
-        //  identifiant de session
-        session_regenerate_id(true);
-
-        //  enregistre l'user dans la session 
-        $_SESSION['user_id'] = (int) $user['id_user'];
-        $_SESSION['user_email'] = $user['email'];
-        $_SESSION['login_time'] = time();
-
-        
+        // Post-Redirect-Get : on revient toujours sur /connexion
         $this->redirect('/connexion');
     }
 
-    // Déconnecte l'user
-    public function logout(): void
+    /**
+     * @brief Déconnecte l'utilisateur courant et détruit sa session.
+     */
+    private function logout(): void
     {
         // vide session et supprime le cookie du navigateur
         $_SESSION = [];
@@ -105,16 +119,20 @@ final class LoginController extends Controller
         $this->redirect('/connexion');
     }
 
-    // mdp oublié l'user donne son email
-    private function oublie(): void
+    /**
+     * @brief Gère la demande de mot de passe oublié.
+     *
+     * Si un compte existe pour l'e-mail fourni, un token de sécurité est
+     * généré et un e-mail de réinitialisation est envoyé.
+     */
+    private function forgotPassword(): void
     {
-        $message = '';
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = trim((string) ($_POST['email'] ?? ''));
+            $email = trim((string) filter_input(INPUT_POST, 'email'));
             $userModel = new User();
             $user = $userModel->findByEmail($email);
 
+            // email existe crée un code secret et envoie le lien
             if ($user !== null) {
                 $token = bin2hex(random_bytes(32));
                 $userModel->saveResetToken((int) $user['id_user'], $token);
@@ -138,7 +156,6 @@ final class LoginController extends Controller
 
                     $mail->setFrom($_ENV['MAIL_USERNAME'], 'Bourse échange');
 
-
                     $prenom = $user['prenom'] ?? '';
                     $mail->addAddress($email, $prenom);
 
@@ -149,11 +166,11 @@ final class LoginController extends Controller
                     $mail->Subject = 'Réinitialisation de votre mot de passe';
                     $mail->Body    = "<p>{$salutation}</p>
                         <p>Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le lien ci-dessous :</p>
-                        <p><a href='{$lien}'>{$lien}</a></p>
+                        <p><a href='{$link}'>{$link}</a></p>
                         <p>Si vous n'êtes pas à l'origine de cette demande, ignorez simplement cet e-mail.</p>
                         <p>L'équipe SAE</p>";
 
-                    $mail->AltBody = "{$salutation}\n\nVous avez demandé à réinitialiser votre mot de passe. Cliquez sur le lien ci-dessous :\n{$lien}\n\nSi vous n'êtes pas à l'origine de cette demande, ignorez simplement cet e-mail.\n\nL'équipe SAE";
+                    $mail->AltBody = "{$salutation}\n\nVous avez demandé à réinitialiser votre mot de passe. Cliquez sur le lien ci-dessous :\n{$link}\n\nSi vous n'êtes pas à l'origine de cette demande, ignorez simplement cet e-mail.\n\nL'équipe SAE";
 
                     $mail->send();
                 } catch (PHPMailerException $e) {
@@ -161,74 +178,75 @@ final class LoginController extends Controller
                 }
             }
 
-            $message = 'Si ce compte existe bien, un email a été envoyé.';
+            // même message dans tous les cas pour ne pas dire qui est inscrit
+            $_SESSION['message'] = 'Si ce compte existe bien, un email a été envoyé.';
+
+            // Post-Redirect-Get : F5 ne renvoie pas un deuxième mail
+            $this->redirect('/mot-de-passe-oublie');
         }
 
-        $this->render('Auth/mot-de-passe-oublie', [
-            'title'   => 'Mot de passe oublié',
-            'message' => $message,
+        $message = $_SESSION['message'] ?? '';
+        unset($_SESSION['message']);
+
+        $this->render('Auth/forgotPassword', [
+            'title'       => 'Mot de passe oublié',
+            'description' => 'Recevez un lien pour choisir un nouveau mot de passe.',
+            'message'     => $message,
         ]);
     }
 
-    // l'user arrive par le lien et choisit un nouveau mdp
-    private function reinitialiser(): void
+    /**
+     * @brief Traite la saisie du nouveau mot de passe via le token reçu par e-mail.
+     */
+    private function resetPassword(): void
     {
         // code secret dans l'adresse
-        $token = (string) ($_GET['token'] ?? '');
+        $token = (string) filter_input(INPUT_GET, 'token');
         $userModel = new User();
         $user = $userModel->findByResetToken($token);
 
-        // code inconnu ou expiré
+        // lien valide et formulaire envoyé : on vérifie le nouveau mdp
+        if ($user !== null && $_SERVER['REQUEST_METHOD'] === 'POST') {
+            $password = (string) filter_input(INPUT_POST, 'password');
+            $confirm = (string) filter_input(INPUT_POST, 'password_confirm');
+
+            $error = '';
+            if (strlen($password) < 8) {
+                $error = 'Le mot de passe doit faire au moins 8 caractères.';
+            } elseif (!preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password) || !preg_match('/[@$!%*?&]/', $password)) {
+                // une majuscule, un chiffre et un caractère spécial, comme à l'inscription
+                $error = 'Le mot de passe doit contenir une majuscule, un chiffre et un caractère spécial (@ $ ! % * ? &).';
+            } elseif ($password !== $confirm) {
+                $error = 'Les mots de passe ne correspondent pas.';
+            }
+
+            if ($error !== '') {
+                $_SESSION['error'] = $error;
+                $this->redirect('/reinitialiser?token=' . urlencode($token));
+            }
+
+            // on enregistre le mdp haché, jamais en clair
+            $userModel->updatePassword((int) $user['id_user'], password_hash($password, PASSWORD_DEFAULT));
+
+            $_SESSION['message'] = 'Mot de passe modifié, vous pouvez vous connecter.';
+            $this->redirect('/connexion');
+        }
+
+        $error = $_SESSION['error'] ?? '';
+        unset($_SESSION['error']);
+
+        // code inconnu ou expiré : pas de formulaire
         if ($user === null) {
-            $this->renderReset('Lien invalide ou expiré.', '');
-            return;
+            $error = 'Lien invalide ou expiré.';
+            $token = '';
         }
 
-        // pas encore envoyé  on affiche le formulaire
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->renderReset('', $token);
-            return;
-        }
-
-        $password = (string) ($_POST['password'] ?? '');
-        $confirm = (string) ($_POST['password_confirm'] ?? '');
-
-        // mdp trop court
-        if (strlen($password) < 8) {
-            $this->renderReset('Le mot de passe doit faire au moins 8 caractères.', $token);
-            return;
-        }
-
-        // les 2 mdp sont différents
-        if ($password !== $confirm) {
-            $this->renderReset('Les mots de passe ne correspondent pas.', $token);
-            return;
-        }
-
-        // hache new mdp et l'enregistre
-        $userModel->updatePassword((int) $user['id_user'], password_hash($password, PASSWORD_DEFAULT));
-        $this->redirect('/connexion');
-    }
-
-    // Réaffiche  formulaire avec message d'erreur
-    private function renderLoginError(string $error, string $email): void
-    {
-        $this->render('Auth/login', [
-            'title'          => 'Connexion',
-            'description'    => 'Connectez-vous à votre espace membre du Projet SAÉ.',
-            'error'          => $error,
-            'submittedEmail' => $email, // pour pas retaper l'email
-        ]);
-    }
-
-
-    // affiche la page nouveau mdp avec un message d'erreur
-    private function renderReset(string $erreur, string $token): void
-    {
-        $this->render('Auth/reinitialiser', [
-            'title'  => 'Nouveau mot de passe',
-            'erreur' => $erreur,
-            'token'  => $token,
+        $this->render('Auth/resetPassword', [
+            'title'       => 'Nouveau mot de passe',
+            'description' => 'Choisissez un nouveau mot de passe.',
+            'error'       => $error,
+            'token'       => $token,
         ]);
     }
 }
+
