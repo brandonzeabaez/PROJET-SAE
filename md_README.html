@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Projet SAÉ: PROJET-SAE</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Projet SAÉ
+   </div>
+   <div id="projectbrief">Documentation du projet</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+<script type="application/json" id="doxygen-config">
+{
+  "relPath": "",
+  "generateTreeView": true,
+  "searchEngine": true,
+  "serverBasedSearch": false,
+  "disableIndex": false,
+  "dynamicMenus": true,
+  "fullSidebar": false
+}
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<div id="main-nav-mobile">
+<div class="sm sm-dox"><input id="main-menu-state" type="checkbox"/>
+<label class="main-menu-btn" for="main-menu-state">
+<span class="main-menu-btn-icon"></span> Toggle main menu visibility</label>
+<span id="searchBoxPos1"></span>
+</div>
+</div><!-- main-nav-mobile -->
+<div id="main-nav">
+  <ul class="sm sm-dox" id="main-menu">
+    <li id="searchBoxPos2">
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Recherche" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+    </li>
+  </ul>
+</div><!-- main-nav -->
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('md_README.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">PROJET-SAE </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md0"></a></p>
+<p>Bourse d'échange est un site Web réalisé dans le cadre de la SAÉ du semestre 3 à l'IUT d'Aix-Marseille Université. Il permet de donner une seconde vie au matériel de l'IUT, simplement et localement : les membres publient du matériel dont ils n'ont plus besoin, et d'autres peuvent le réserver.</p>
+<p>Le site est développé en PHP orienté objet avec une architecture MVC (routeur, contrôleurs, modèles, vues) et une base de données MySQL utilisée via PDO et des requêtes préparées. Il comprend une partie publique (accueil, inscription, connexion, mot de passe oublié, mentions légales) et un espace membre. La sécurité suit les recommandations de l'OWASP : mots de passe hachés, sessions, protection contre l'injection SQL et le XSS, lien de réinitialisation à usage unique envoyé par e-mail.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
+Prérequis</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Outil  </th><th class="markdownTableHeadNone">Version  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">PHP  </td><td class="markdownTableBodyNone"><b>8.1</b>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Composer  </td><td class="markdownTableBodyNone">2.x (dernière version stable)  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">MySQL  </td><td class="markdownTableBodyNone">INNODB v11.4 (mariadb)  </td></tr>
+</table>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
+Vérifier la version de PHP</h2>
+<div class="fragment"><div class="line">php -v</div>
+</div><!-- fragment --><p>La sortie doit indiquer <span class="tt">PHP 8.1.x</span>. Si ce n'est pas le cas, installez PHP 8.1 avant de continuer.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
+Extensions PHP nécessaires</h2>
+<p>Le projet utilise PDO pour se connecter à MySQL. Vérifiez que l'extension est activée :</p>
+<div class="fragment"><div class="line">php -m | grep -i pdo</div>
+</div><!-- fragment --><p>Vous devez voir <span class="tt">PDO</span> et <span class="tt">pdo_mysql</span>. Sinon, activez-les dans votre <span class="tt">php.ini</span> (ligne <span class="tt">extension=pdo_mysql</span>).</p>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
+Installer Composer</h1>
+<p>Composer est le gestionnaire de dépendances de PHP.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
+Windows</h2>
+<ol type="1">
+<li>Téléchargez et lancez l'installateur <b>Composer-Setup.exe</b> depuis <a href="https://getcomposer.org/download/">getcomposer.org/download</a>.</li>
+<li>Pendant l'installation, sélectionnez l'exécutable <span class="tt">php.exe</span> de votre PHP 8.1.</li>
+<li>Ouvrez un <b>nouveau</b> terminal et vérifiez : <div class="fragment"><div class="line">composer --version</div>
+</div><!-- fragment --></li>
+</ol>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
+Linux / macOS</h2>
+<p>Dans un terminal :</p>
+<div class="fragment"><div class="line">php -r &quot;copy(&#39;https://getcomposer.org/installer&#39;, &#39;composer-setup.php&#39;);&quot;</div>
+<div class="line">php composer-setup.php</div>
+<div class="line">php -r &quot;unlink(&#39;composer-setup.php&#39;);&quot;</div>
+<div class="line">sudo mv composer.phar /usr/local/bin/composer</div>
+</div><!-- fragment --><p>Puis vérifiez :</p>
+<div class="fragment"><div class="line">composer --version</div>
+</div><!-- fragment --><blockquote class="doxtable">
+<p>Pour plus de sécurité, la page <a href="https://getcomposer.org/download/">getcomposer.org/download</a> fournit une commande de vérification du hash de l'installateur à exécuter avant <span class="tt">php composer-setup.php</span>. </p>
+</blockquote>
+<p>Sur macOS, vous pouvez aussi utiliser Homebrew : <span class="tt">brew install composer</span>.</p>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
+Installer le projet</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
+1. Cloner le dépôt</h2>
+<div class="fragment"><div class="line">git clone &lt;url-du-depot&gt;</div>
+<div class="line">cd &lt;nom-du-projet&gt;</div>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
+2. Installer les dépendances</h2>
+<div class="fragment"><div class="line">composer install</div>
+</div><!-- fragment --><p>Cette commande lit le fichier <span class="tt">composer.lock</span> et installe exactement les mêmes versions des dépendances pour tous les développeurs, dans le dossier <span class="tt">vendor/</span>. Elle génère aussi l'autoloader (<span class="tt">vendor/autoload.php</span>).</p>
+<blockquote class="doxtable">
+<p>⚠️ Le dossier <span class="tt">vendor/</span> ne doit pas être versionné (il est dans <span class="tt">.gitignore</span>). </p>
+</blockquote>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
+3. Configurer l'environnement</h2>
+<p>Copiez le fichier d'exemple et renseignez vos identifiants de base de données :</p>
+<div class="fragment"><div class="line">cp .env.example .env</div>
+</div><!-- fragment --><blockquote class="doxtable">
+<p>⚠️ Le fichier <span class="tt">.env</span> contient des informations sensibles : ne le commitez jamais. </p>
+</blockquote>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
+Commandes Composer utiles</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Commande  </th><th class="markdownTableHeadNone">Rôle  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">composer install</span>  </td><td class="markdownTableBodyNone">Installe les dépendances listées dans <span class="tt">composer.lock</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">composer require &lt;paquet&gt;</span>  </td><td class="markdownTableBodyNone">Ajoute une nouvelle dépendance au projet  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">composer require --dev &lt;paquet&gt;</span>  </td><td class="markdownTableBodyNone">Ajoute une dépendance de développement uniquement  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">composer update</span>  </td><td class="markdownTableBodyNone">Met à jour les dépendances (modifie <span class="tt">composer.lock</span>, à faire avec précaution)  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">composer dump-autoload</span>  </td><td class="markdownTableBodyNone">Régénère l'autoloader après l'ajout de nouvelles classes  </td></tr>
+</table>
+<p>Après un <span class="tt">composer require</span> ou un <span class="tt">composer update</span>, pensez à commiter <b><span class="tt">composer.json</span> et <span class="tt">composer.lock</span></b> pour que toute l'équipe ait les mêmes versions. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
+  </ul>
+</div>
+</body>
+</html>
