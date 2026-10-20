@@ -34,11 +34,13 @@ class Model
      * @brief Constructeur du modèle.
      *
      * Charge les variables d'environnement et initialise la connexion.
+     * Le fichier `.env` est cherché à la racine du projet puis dans `config/`.
      */
     public function __construct()
     {
-        $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../../config');
-        $dotenv->load();
+        // safeLoad : pas d'erreur si le .env est absent (déjà chargé par public/index.php)
+        $dotenv = \Dotenv\Dotenv::createImmutable([__DIR__ . '/../..', __DIR__ . '/../../config']);
+        $dotenv->safeLoad();
         $this->connect();
     }
 
