@@ -12,7 +12,8 @@ use App\Core\Model;
 class RegisterModel extends Model
 {
     /** @var string Requête SQL d'insertion d'un nouvel utilisateur. */
-    private string $query = 'INSERT INTO User(email, mot_de_passe, nom, prenom, pays) VALUES (:email, :mot_de_passe, :nom, :prenom, :pays)';
+    private string $query = 'INSERT INTO User(email, mot_de_passe, nom, prenom, pays, email_verifie, verification_token, verification_expire) '
+        . 'VALUES (:email, :mot_de_passe, :nom, :prenom, :pays, 0, :verification_token, DATE_ADD(NOW(), INTERVAL 24 HOUR))';
 
     /** @var array<string, mixed> Données à insérer en base. */
     private array $registrationData;

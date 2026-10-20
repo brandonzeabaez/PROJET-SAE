@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Models\RegisterModel;
+use App\Models\User;
 use App\Views\Auth\RegisterView;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -107,7 +108,9 @@ class Register
             'mot_de_passe' => password_hash($_POST['password'], PASSWORD_DEFAULT),
             'nom' => $_POST['nom'],
             'prenom' => $_POST['prenom'],
-            'pays' => $_POST['pays']
+            'pays' => $_POST['pays'],
+            // jeton secret envoyé dans le lien de confirmation
+            'verification_token' => bin2hex(random_bytes(32))
         ];
 
         $this->sendForm();
@@ -130,19 +133,50 @@ class Register
             return;
         }
 
-        $this->sendConfirmationMail($this->vals['email'], $this->vals['prenom']);
-        header('Location: /Login');
+        $this->sendConfirmationMail($this->vals['email'], $this->vals['prenom'], $this->vals['verification_token']);
+
+        // message affiché une seule fois sur la page de connexion
+        $_SESSION['message'] = 'Un email de confirmation vous a été envoyé. Cliquez sur le lien qu\'il contient pour activer votre compte.';
+        header('Location: /connexion');
         exit;
     }
 
     /**
-     * @brief Envoie un e-mail de confirmation à l'utilisateur inscrit.
+     * @brief Valide l'adresse mail via le lien de confirmation reçu par e-mail.
+     *
+     * Le compte est activé si le jeton existe et n'est pas expiré, puis
+     * l'utilisateur est redirigé vers la page de connexion.
+     */
+    public function verify(): void
+    {
+        // code secret dans l'adresse
+        $token = (string) filter_input(INPUT_GET, 'token');
+        $userModel = new User();
+        $user = $token !== '' ? $userModel->findByVerificationToken($token) : null;
+
+        if ($user === null) {
+            $_SESSION['error'] = 'Lien de confirmation invalide ou expiré.';
+        } else {
+            $userModel->markEmailVerified((int) $user['id_user']);
+            $_SESSION['message'] = 'Adresse mail confirmée, vous pouvez vous connecter.';
+        }
+
+        header('Location: /connexion');
+        exit;
+    }
+
+    /**
+     * @brief Envoie à l'utilisateur inscrit un e-mail contenant le lien de confirmation.
      *
      * @param string $email Adresse e-mail du nouvel utilisateur.
      * @param string $firstName Prénom de l'utilisateur.
+     * @param string $token Jeton de vérification de l'adresse mail.
      */
-    private function sendConfirmationMail(string $email, string $firstName): void
+    private function sendConfirmationMail(string $email, string $firstName, string $token): void
     {
+        $appUrl = rtrim($_ENV['APP_URL'] ?? 'https://masae2026.alwaysdata.net/', '/');
+        $link = $appUrl . '/inscription/verify?token=' . $token;
+
         $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();
@@ -161,10 +195,13 @@ class Register
             $mail->isHTML(true);
             $mail->Subject = 'Confirmation de votre inscription';
             $mail->Body    = "<p>Bonjour $firstNameHtml,</p>
-                <p>Votre inscription a bien été prise en compte. Vous pouvez dès maintenant vous connecter avec votre adresse e-mail.</p>
+                <p>Merci pour votre inscription. Pour activer votre compte, confirmez votre adresse mail en cliquant sur le lien ci-dessous :</p>
+                <p><a href='{$link}'>{$link}</a></p>
+                <p>Ce lien est valable 24 heures. Si vous n'êtes pas à l'origine de cette inscription, ignorez simplement cet e-mail.</p>
                 <p>L'équipe SAE</p>";
-            $mail->AltBody = "Bonjour $firstName,\n\nVotre inscription a bien été prise en compte. "
-                . "Vous pouvez dès maintenant vous connecter avec votre adresse e-mail.\n\nL'équipe SAE";
+            $mail->AltBody = "Bonjour $firstName,\n\nMerci pour votre inscription. Pour activer votre compte, "
+                . "confirmez votre adresse mail en cliquant sur le lien ci-dessous :\n{$link}\n\n"
+                . "Ce lien est valable 24 heures. Si vous n'êtes pas à l'origine de cette inscription, ignorez simplement cet e-mail.\n\nL'équipe SAE";
 
             $mail->send();
         } catch (Exception $e) {

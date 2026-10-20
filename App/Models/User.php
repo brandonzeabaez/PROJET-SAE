@@ -37,7 +37,7 @@ final class User extends Model
     public function findByEmail(string $email): ?array
     {
         // prenom sert à dire « Bonjour {prénom} » dans le mail
-        $sql = 'SELECT id_user, email, mot_de_passe, prenom FROM User WHERE email = :email LIMIT 1';
+        $sql = 'SELECT id_user, email, mot_de_passe, prenom, email_verifie FROM User WHERE email = :email LIMIT 1';
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue('email', $email, PDO::PARAM_STR);
         $stmt->execute();
@@ -89,6 +89,36 @@ final class User extends Model
         $sql = 'UPDATE User SET mot_de_passe = :hash, reset_token = NULL, reset_expire = NULL WHERE id_user = :id';
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue('hash', $hash, PDO::PARAM_STR);
+        $stmt->bindValue('id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    /**
+     * @brief Vérifie qu'un jeton de vérification d'adresse mail existe et n'est pas expiré.
+     *
+     * @param string $token Jeton reçu via le lien de confirmation.
+     * @return array<string, mixed>|null Données utilisateur associées au token si valides.
+     */
+    public function findByVerificationToken(string $token): ?array
+    {
+        $sql = 'SELECT id_user FROM User WHERE verification_token = :token AND verification_expire > NOW() LIMIT 1';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue('token', $token, PDO::PARAM_STR);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $user === false ? null : $user;
+    }
+
+    /**
+     * @brief Marque l'adresse mail d'un utilisateur comme vérifiée et invalide le jeton.
+     *
+     * @param int $id Identifiant utilisateur.
+     */
+    public function markEmailVerified(int $id): void
+    {
+        $sql = 'UPDATE User SET email_verifie = 1, verification_token = NULL, verification_expire = NULL WHERE id_user = :id';
+        $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue('id', $id, PDO::PARAM_INT);
         $stmt->execute();
     }
