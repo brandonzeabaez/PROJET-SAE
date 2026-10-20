@@ -3,7 +3,7 @@ namespace App\Views\Auth;
 use App\Content\Enums\CountriesEnum;
 
 class RegisterView {
-    public function showForm(?string $error = null, array $old = []): void {
+    public function showForm(?string $error = null, array $old = [], array $passwordRequirements = []): void {
         // Récupération et sécurisation des anciennes valeurs
         $nom    = htmlspecialchars($old['nom'] ?? '');
         $prenom = htmlspecialchars($old['prenom'] ?? '');
@@ -40,9 +40,21 @@ class RegisterView {
         echo '<input type="email" id="email" name="email" value="' . $email . '" required></div>';
 
         echo '<div><label for="password">Mot de passe</label>';
-        echo '<input type="password" id="password" name="password" required>';
+        echo '<input type="password" id="password" name="password" aria-describedby="password-requirements" required>';
 
-        echo '<div><label for="password_confirmation">Confirmation mot de passe</label></div>';
+        // Affichage des prérequis du mot de passe
+        if (!empty($passwordRequirements)) {
+            echo '<div id="password-requirements">';
+            echo '<p>Le mot de passe doit contenir :</p>';
+            echo '<ul>';
+            foreach ($passwordRequirements as $requirement) {
+                echo '<li>' . htmlspecialchars($requirement) . '</li>';
+            }
+            echo '</ul></div>';
+        }
+        echo '</div>';
+
+        echo '<div><label for="password_confirmation">Confirmation mot de passe</label>';
         echo '<input type="password" id="password_confirmation" name="password_confirmation" required></div>';
 
         echo '<div><button type="submit">S\'inscrire</button></div>';

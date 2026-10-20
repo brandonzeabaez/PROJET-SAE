@@ -35,6 +35,16 @@ class Register
     /** @var string Expression régulière de validation du mot de passe. */
     private const REGEX_PASSWORD = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/';
 
+    /** @var string[] Prérequis du mot de passe affichés dans le formulaire (doivent correspondre à REGEX_PASSWORD). */
+    private const PASSWORD_REQUIREMENTS = [
+        'Au moins 8 caractères',
+        'Au moins une lettre minuscule',
+        'Au moins une lettre majuscule',
+        'Au moins un chiffre',
+        'Au moins un caractère spécial parmi @ $ ! % * ? &',
+        'Uniquement des lettres non accentuées, des chiffres et ces caractères spéciaux',
+    ];
+
     /** @var array<string, mixed> Données récupérées depuis le formulaire. */
     private array $vals;
 
@@ -67,7 +77,7 @@ class Register
      */
     private function getShowForm(): void
     {
-        $this->view->showForm();
+        $this->view->showForm(null, [], self::PASSWORD_REQUIREMENTS);
     }
 
     /**
@@ -86,8 +96,9 @@ class Register
     private function handlePost() : void {
         if (!$this->passwordValidation()) {
             $this->view->showForm(
-                'Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial (@ $ ! % * ? &), et les deux saisies doivent être identiques.',
-                $_POST // <-- On renvoie les données saisies à la vue
+                'Le mot de passe ne respecte pas les prérequis indiqués ou les deux saisies ne sont pas identiques.',
+                $_POST, // <-- On renvoie les données saisies à la vue
+                self::PASSWORD_REQUIREMENTS
             );
             return;
         }
@@ -115,7 +126,7 @@ class Register
         } catch (\PDOException $e) {
             error_log($e->getMessage());
             // Si l'email est déjà utilisé, on renvoie aussi $_POST pour ne pas tout effacer
-            $this->view->showForm('Le mail saisi est invalide ou est déjà utilisé', $_POST);
+            $this->view->showForm('Le mail saisi est invalide ou est déjà utilisé', $_POST, self::PASSWORD_REQUIREMENTS);
             return;
         }
 
