@@ -91,7 +91,12 @@ final class Login extends Controller
 
         $user = (new User())->findByEmail($email);
 
-        if ($user !== null && password_verify($password, $user['mot_de_passe'])) {
+        $validCredentials = $user !== null && password_verify($password, $user['mot_de_passe']);
+
+        if ($validCredentials && !(bool) $user['email_verifie']) {
+            // bons identifiants mais adresse mail pas encore confirmée via le lien reçu
+            $_SESSION['error'] = 'Confirmez votre adresse mail avant de vous connecter (vérifiez votre boîte mail).';
+        } elseif ($validCredentials) {
             // nouvel identifiant de session : empêche le vol de session
             session_regenerate_id(true);
 

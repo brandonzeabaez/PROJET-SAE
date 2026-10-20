@@ -23,9 +23,20 @@ CREATE TABLE IF NOT EXISTS User(
    id_hierarchie INT DEFAULT 1,
    reset_token VARCHAR(255) NULL,
    reset_expire DATETIME NULL,
+   email_verifie BOOLEAN NOT NULL DEFAULT 0,
+   verification_token VARCHAR(255) NULL,
+   verification_expire DATETIME NULL,
    CONSTRAINT pk_user_con PRIMARY KEY(id_user),
    CONSTRAINT fk_user_to_hierarchie_con FOREIGN KEY(id_hierarchie) REFERENCES Hierachie(id_hierarchie)
-);   
+);
+
+-- Mise à jour d'une base existante (vérification de l'adresse mail) :
+-- ALTER TABLE User
+--    ADD COLUMN email_verifie BOOLEAN NOT NULL DEFAULT 0,
+--    ADD COLUMN verification_token VARCHAR(255) NULL,
+--    ADD COLUMN verification_expire DATETIME NULL;
+-- Les comptes déjà créés sont considérés comme vérifiés :
+-- UPDATE User SET email_verifie = 1;
 
 CREATE TABLE IF NOT EXISTS Publication(
    id_publication INT,
