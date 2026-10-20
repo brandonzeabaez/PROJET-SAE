@@ -1,9 +1,13 @@
 RewriteEngine ON
+
+# Rediriction de http -> https
+# alwaysdata termine le SSL en amont : %{HTTPS} n'est jamais "on" côté Apache,
+# il faut donc se baser sur l'en-tête X-Forwarded-Proto transmis par leur proxy.
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]
-# Rediriction de hhtp -> https 
-RewriteEngine on
-RewriteCond %{HTTPS} !=on
-RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
