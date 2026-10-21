@@ -7,6 +7,23 @@ RewriteCond %{HTTPS} !=on
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
+# HSTS : le navigateur retient qu'il doit toujours utiliser HTTPS (1 an)
+# envoyé seulement sur les réponses HTTPS
+SetEnvIf X-Forwarded-Proto "https" IS_HTTPS
+<IfModule mod_headers.c>
+    Header always set Strict-Transport-Security "max-age=31536000" env=IS_HTTPS
+
+    # CSP : le navigateur ne charge que les ressources autorisées ici
+    # tout est bloqué par défaut, on n'ouvre que ce dont le site a besoin (CSS, images, formulaires)
+    Header always set Content-Security-Policy "default-src 'none'; style-src 'self'; img-src 'self'; font-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"
+
+    # empêche le navigateur de deviner le type d'un fichier (il respecte le Content-Type envoyé)
+    Header always set X-Content-Type-Options "nosniff"
+
+    # interdit d'afficher le site dans une iframe (anciens navigateurs, frame-ancestors fait pareil)
+    Header always set X-Frame-Options "DENY"
+</IfModule>
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]

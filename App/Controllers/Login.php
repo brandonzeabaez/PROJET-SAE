@@ -118,7 +118,14 @@ final class Login extends Controller
     {
         // vide session et supprime le cookie du navigateur
         $_SESSION = [];
-        setcookie(session_name(), '', time() - 3600, '/');
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', [
+            'expires'  => time() - 3600,
+            'path'     => $params['path'],
+            'secure'   => $params['secure'],
+            'httponly' => $params['httponly'],
+            'samesite' => $params['samesite'],
+        ]);
         session_destroy();
 
         $this->redirect('/Login');
