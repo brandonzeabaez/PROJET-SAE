@@ -6,6 +6,9 @@ CREATE TABLE IF NOT EXISTS Hierachie(
    CONSTRAINT pk_hierarchie_con PRIMARY KEY(id_hierarchie)
 );
 
+-- Rôles des utilisateurs (2 = administrateur, accès au panel /admin)
+INSERT IGNORE INTO Hierachie(id_hierarchie, role) VALUES (1, 'utilisateur'), (2, 'admin');
+
 CREATE TABLE IF NOT EXISTS Permission(
    id_permission INT,
    libelle VARCHAR(50) NOT NULL,
@@ -62,5 +65,22 @@ CREATE TABLE IF NOT EXISTS Reserve(
    CONSTRAINT pk_possede_con PRIMARY KEY(id_user, id_publication),
    CONSTRAINT fk_user_con FOREIGN KEY(id_user) REFERENCES User(id_user),
    FOREIGN KEY(id_publication) REFERENCES Publication(id_publication)
+);
+
+-- Comptes des départements de l'IUT, créés par un administrateur.
+-- Le secrétariat reçoit un lien unique (jeton stocké haché en SHA-256) pour
+-- saisir le nom du département, la ville et choisir son mot de passe.
+-- mot_de_passe est NULL tant que cette première connexion n'est pas faite.
+CREATE TABLE IF NOT EXISTS Departement(
+   id_departement INT AUTO_INCREMENT,
+   email_secretariat VARCHAR(100) UNIQUE NOT NULL,
+   mot_de_passe VARCHAR(255) NULL,
+   nom_departement VARCHAR(100) NULL,
+   ville VARCHAR(100) NULL,
+   actif BOOLEAN NOT NULL DEFAULT 0,
+   setup_token CHAR(64) NULL,
+   setup_expire DATETIME NULL,
+   date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   CONSTRAINT pk_departement_con PRIMARY KEY(id_departement)
 );
 

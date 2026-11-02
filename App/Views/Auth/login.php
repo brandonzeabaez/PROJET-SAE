@@ -5,6 +5,10 @@
     <?php if (isset($_SESSION['user_email'])) : ?>
 
         <p>Vous êtes connecté en tant que <?= htmlspecialchars($_SESSION['user_email']) ?>.</p>
+        <?php // lien vers le panel pour les administrateurs ?>
+        <?php if (($_SESSION['role'] ?? '') === 'admin') : ?>
+            <p><a href="/admin">Panel administrateur</a></p>
+        <?php endif; ?>
         <p><a href="/deconnexion">Se déconnecter</a></p>
 
     <?php else : ?>

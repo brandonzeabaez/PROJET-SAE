@@ -36,8 +36,8 @@ final class User extends Model
      */
     public function findByEmail(string $email): ?array
     {
-        // prenom sert à dire « Bonjour {prénom} » dans le mail
-        $sql = 'SELECT id_user, email, mot_de_passe, prenom, email_verifie FROM User WHERE email = :email LIMIT 1';
+        // prenom sert à dire « Bonjour {prénom} » dans le mail, id_hierarchie donne le rôle
+        $sql = 'SELECT id_user, email, mot_de_passe, prenom, email_verifie, id_hierarchie FROM User WHERE email = :email LIMIT 1';
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue('email', $email, PDO::PARAM_STR);
         $stmt->execute();
