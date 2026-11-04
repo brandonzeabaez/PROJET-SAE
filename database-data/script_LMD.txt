@@ -1,66 +1,89 @@
 USE sae30392_mysql;
 
-CREATE TABLE IF NOT EXISTS Hierachie(
-   id_hierarchie INT,
-   role VARCHAR(50),
-   CONSTRAINT pk_hierarchie_con PRIMARY KEY(id_hierarchie)
+DROP TABLE IF EXISTS Reserve, Token, Utilisateur, Administrateur, Annonce, Profil, Departement, Site, Categorie, Hierarchie, Hierachie;
+
+CREATE TABLE Hierarchie(
+   id_hierarchie INT AUTO_INCREMENT,
+   role VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id_hierarchie)
 );
 
-CREATE TABLE IF NOT EXISTS Permission(
-   id_permission INT,
-   libelle VARCHAR(50) NOT NULL,
-   CONSTRAINT pk_permission_con PRIMARY KEY(id_permission)
+CREATE TABLE Categorie(
+   id_categorie INT AUTO_INCREMENT,
+   categorie VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id_categorie)
 );
 
-CREATE TABLE IF NOT EXISTS User(
-   id_user INT AUTO_INCREMENT,
-   email VARCHAR(50) UNIQUE NOT NULL,
+CREATE TABLE Site(
+   id_site INT AUTO_INCREMENT,
+   nom_site VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id_site)
+);
+
+CREATE TABLE Departement(
+   id_departement INT AUTO_INCREMENT,
+   nom_departement VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id_departement)
+);
+
+CREATE TABLE Profil(
+   id_Utilisateur INT AUTO_INCREMENT,
+   email VARCHAR(255) NOT NULL UNIQUE,
    mot_de_passe VARCHAR(255) NOT NULL,
-   nom CHAR(50) NOT NULL,
-   prenom CHAR(50) NOT NULL,
-   telephone CHAR(16),
-   pays CHAR(30),
-   id_hierarchie INT DEFAULT 1,
-   reset_token VARCHAR(255) NULL,
-   reset_expire DATETIME NULL,
-   email_verifie BOOLEAN NOT NULL DEFAULT 0,
-   verification_token VARCHAR(255) NULL,
-   verification_expire DATETIME NULL,
-   CONSTRAINT pk_user_con PRIMARY KEY(id_user),
-   CONSTRAINT fk_user_to_hierarchie_con FOREIGN KEY(id_hierarchie) REFERENCES Hierachie(id_hierarchie)
+   email_verifiee BOOLEAN NOT NULL DEFAULT FALSE,
+   id_hierarchie INT NOT NULL,
+   PRIMARY KEY(id_Utilisateur),
+   FOREIGN KEY(id_hierarchie) REFERENCES Hierarchie(id_hierarchie) ON DELETE RESTRICT
 );
 
--- Mise à jour d'une base existante (vérification de l'adresse mail) :
--- ALTER TABLE User
---    ADD COLUMN email_verifie BOOLEAN NOT NULL DEFAULT 0,
---    ADD COLUMN verification_token VARCHAR(255) NULL,
---    ADD COLUMN verification_expire DATETIME NULL;
--- Les comptes déjà créés sont considérés comme vérifiés :
--- UPDATE User SET email_verifie = 1;
+CREATE TABLE Annonce(
+   id_publication INT AUTO_INCREMENT,
+   nom_publication VARCHAR(100) NOT NULL,
+   date_publication DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   description TEXT,
+   quantite INT NOT NULL DEFAULT 1,
+   id_categorie INT NULL,
+   id_Utilisateur INT NOT NULL,
+   PRIMARY KEY(id_publication),
+   FOREIGN KEY(id_categorie) REFERENCES Categorie(id_categorie) ON DELETE SET NULL,
+   FOREIGN KEY(id_Utilisateur) REFERENCES Profil(id_Utilisateur) ON DELETE CASCADE
+);
 
-CREATE TABLE IF NOT EXISTS Publication(
+CREATE TABLE Administrateur(
+   id_Utilisateur INT,
+   PRIMARY KEY(id_Utilisateur),
+   FOREIGN KEY(id_Utilisateur) REFERENCES Profil(id_Utilisateur) ON DELETE CASCADE
+);
+
+CREATE TABLE Utilisateur(
+   id_Utilisateur INT,
+   id_site INT NULL,
+   id_departement INT NOT NULL,
+   PRIMARY KEY(id_Utilisateur),
+   FOREIGN KEY(id_Utilisateur) REFERENCES Profil(id_Utilisateur) ON DELETE CASCADE,
+   FOREIGN KEY(id_site) REFERENCES Site(id_site) ON DELETE SET NULL,
+   FOREIGN KEY(id_departement) REFERENCES Departement(id_departement) ON DELETE RESTRICT
+);
+
+CREATE TABLE Token(
+   id_token INT AUTO_INCREMENT,
+   token_hash CHAR(64) NOT NULL UNIQUE,
+   type ENUM('verification_email','reset_password','remember_me') NOT NULL,
+   date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   date_expiration DATETIME NOT NULL,
+   date_utilisation DATETIME NULL,
+   id_Utilisateur INT NOT NULL,
+   PRIMARY KEY(id_token),
+   FOREIGN KEY(id_Utilisateur) REFERENCES Profil(id_Utilisateur) ON DELETE CASCADE
+);
+
+CREATE TABLE Reserve(
    id_publication INT,
-   nom_publication VARCHAR(50),
-   date_publication DATE,
-   id_user INT NOT NULL,
-   CONSTRAINT pk_publication_con PRIMARY KEY(id_publication),
-   CONSTRAINT fk_publication_con FOREIGN KEY(id_user) REFERENCES User(id_user)
+   date_reservation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   id_Utilisateur INT NOT NULL,
+   PRIMARY KEY(id_publication),
+   FOREIGN KEY(id_publication) REFERENCES Annonce(id_publication) ON DELETE CASCADE,
+   FOREIGN KEY(id_Utilisateur) REFERENCES Profil(id_Utilisateur) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Possede(
-   id_hierarchie INT,
-   id_permission INT,
-   CONSTRAINT pk_possede_con PRIMARY KEY(id_hierarchie, id_permission),
-   CONSTRAINT pk_possede_to_hierarchie_con FOREIGN KEY(id_hierarchie) REFERENCES Hierachie(id_hierarchie),
-   CONSTRAINT fk_possede_to_permission_con FOREIGN KEY(id_permission) REFERENCES Permission(id_permission)
-);   
-
-CREATE TABLE IF NOT EXISTS Reserve(
-   id_user INT,
-   id_publication INT,
-   date_reservation DATE,
-   CONSTRAINT pk_possede_con PRIMARY KEY(id_user, id_publication),
-   CONSTRAINT fk_user_con FOREIGN KEY(id_user) REFERENCES User(id_user),
-   FOREIGN KEY(id_publication) REFERENCES Publication(id_publication)
-);
-
+CREATE INDEX idx_token_user_type ON Token(id_Utilisateur, type);
