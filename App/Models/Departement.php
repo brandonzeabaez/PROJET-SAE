@@ -221,6 +221,21 @@ final class Departement extends Model
     }
 
     /**
+     * @brief Indique si un compte existe encore et est actif (vérifié à chaque page pour une session ouverte).
+     *
+     * @param int $id Identifiant du département.
+     * @return bool true si le compte existe et est actif.
+     */
+    public function isActive(int $id): bool
+    {
+        $stmt = $this->pdo->prepare('SELECT 1 FROM Departement WHERE id_departement = :id AND actif = 1 LIMIT 1');
+        $stmt->bindValue('id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchColumn() !== false;
+    }
+
+    /**
      * @brief Supprime définitivement un compte département.
      *
      * @param int $id Identifiant du département.
