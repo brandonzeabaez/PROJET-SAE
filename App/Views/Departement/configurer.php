@@ -5,6 +5,7 @@
  * @var string $error
  * @var string $token
  * @var string $email
+ * @var string $nom
  * @var array<string, string> $old
  */
 ?>
@@ -18,17 +19,12 @@
 
     <?php // affiche le formulaire seulement si le lien est valide ?>
     <?php if ($token !== '') : ?>
+        <p>Département : <strong><?= htmlspecialchars($nom) ?></strong></p>
         <p>Compte du secrétariat : <strong><?= htmlspecialchars($email) ?></strong></p>
         <p>Pour des raisons de sécurité, vous devez choisir votre propre mot de passe.</p>
 
         <?php // le code reste dans l'adresse pour savoir de quel compte il s'agit à l'envoi ?>
         <form action="/departement/configurer?token=<?= htmlspecialchars($token) ?>" method="post">
-            <div class="field">
-                <label for="nom_departement">Nom du département</label>
-                <input type="text" id="nom_departement" name="nom_departement" maxlength="100"
-                       value="<?= htmlspecialchars($old['nom_departement'] ?? '') ?>"
-                       placeholder="Informatique" required>
-            </div>
 
             <div class="field">
                 <label for="ville">Ville</label>

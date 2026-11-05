@@ -3,8 +3,9 @@
  * @file Departement.php
  * @brief Contrôleur de la première connexion d'un compte département.
  *
- * Le secrétariat arrive ici via le lien unique reçu par e-mail. Il doit
- * saisir le nom du département, la ville et choisir son mot de passe.
+ * Le secrétariat arrive ici via le lien unique reçu par e-mail. Le nom du
+ * département est choisi par l'administrateur : il doit saisir la ville et
+ * choisir son mot de passe.
  *
  * @author Brandon
  * @author Aymen
@@ -50,14 +51,13 @@ final class Departement extends Controller
 
         // lien valide et formulaire envoyé : on vérifie les données
         if ($departement !== null && $_SERVER['REQUEST_METHOD'] === 'POST') {
-            $nom = trim((string) filter_input(INPUT_POST, 'nom_departement'));
             $ville = trim((string) filter_input(INPUT_POST, 'ville'));
             $password = (string) filter_input(INPUT_POST, 'password');
             $confirm = (string) filter_input(INPUT_POST, 'password_confirm');
 
             $error = '';
-            if ($nom === '' || mb_strlen($nom) > 100 || $ville === '' || mb_strlen($ville) > 100) {
-                $error = 'Le nom du département et la ville sont obligatoires (100 caractères maximum).';
+            if ($ville === '' || mb_strlen($ville) > 100) {
+                $error = 'La ville est obligatoire (100 caractères maximum).';
             } elseif (!preg_match(self::REGEX_PASSWORD, $password)) {
                 $error = 'Le mot de passe doit contenir au moins 8 caractères, une minuscule, une majuscule, un chiffre et un caractère spécial (@ $ ! % * ? &).';
             } elseif ($password !== $confirm) {
@@ -66,13 +66,13 @@ final class Departement extends Controller
 
             if ($error !== '') {
                 $_SESSION['error'] = $error;
-                // on garde le nom et la ville saisis pour ne pas tout retaper
-                $_SESSION['old'] = ['nom_departement' => $nom, 'ville' => $ville];
+                // on garde la ville saisie pour ne pas la retaper
+                $_SESSION['old'] = ['ville' => $ville];
                 $this->redirect('/departement/configurer?token=' . urlencode($token));
             }
 
             // on enregistre le mdp haché, jamais en clair, et le lien devient inutilisable
-            $model->completeSetup((int) $departement['id_departement'], $nom, $ville, password_hash($password, PASSWORD_DEFAULT));
+            $model->completeSetup((int) $departement['id_departement'], $ville, password_hash($password, PASSWORD_DEFAULT));
 
             $_SESSION['message'] = 'Informations enregistrées. Vous pourrez vous connecter dès qu\'un administrateur aura activé votre compte.';
             $this->redirect('/connexion');
@@ -94,6 +94,7 @@ final class Departement extends Controller
             'error'       => $error,
             'token'       => $token,
             'email'       => $departement['email_secretariat'] ?? '',
+            'nom'         => $departement['nom_departement'] ?? '',
             'old'         => $old,
         ]);
     }

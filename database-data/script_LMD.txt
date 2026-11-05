@@ -67,15 +67,15 @@ CREATE TABLE IF NOT EXISTS Reserve(
    FOREIGN KEY(id_publication) REFERENCES Publication(id_publication)
 );
 
--- Comptes des départements de l'IUT, créés par un administrateur.
+-- Comptes des départements de l'IUT, créés par un administrateur (nom + e-mail partagé).
 -- Le secrétariat reçoit un lien unique (jeton stocké haché en SHA-256) pour
--- saisir le nom du département, la ville et choisir son mot de passe.
+-- saisir la ville et choisir son mot de passe.
 -- mot_de_passe est NULL tant que cette première connexion n'est pas faite.
 CREATE TABLE IF NOT EXISTS Departement(
    id_departement INT AUTO_INCREMENT,
    email_secretariat VARCHAR(100) UNIQUE NOT NULL,
    mot_de_passe VARCHAR(255) NULL,
-   nom_departement VARCHAR(100) NULL,
+   nom_departement VARCHAR(100) UNIQUE NOT NULL,
    ville VARCHAR(100) NULL,
    actif BOOLEAN NOT NULL DEFAULT 0,
    setup_token CHAR(64) NULL,
@@ -83,4 +83,8 @@ CREATE TABLE IF NOT EXISTS Departement(
    date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
    CONSTRAINT pk_departement_con PRIMARY KEY(id_departement)
 );
+
+-- Si la table Departement existe déjà (version sans nom obligatoire) :
+-- DELETE FROM Departement WHERE nom_departement IS NULL;
+-- ALTER TABLE Departement MODIFY nom_departement VARCHAR(100) NOT NULL, ADD UNIQUE(nom_departement);
 
