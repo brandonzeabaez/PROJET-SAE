@@ -97,17 +97,17 @@ final class Login extends Controller
             // bons identifiants mais adresse mail pas encore confirmée via le lien reçu
             $_SESSION['error'] = 'Confirmez votre adresse mail avant de vous connecter (vérifiez votre boîte mail).';
         } elseif ($validCredentials) {
-            // nouvel identifiant de session : empêche le vol de session
+            // nouvel identifiant de session  empêche le vol de session
             session_regenerate_id(true);
 
             $_SESSION['user_id'] = (int) $user['id_user'];
             $_SESSION['user_email'] = $user['email'];
         } else {
-            // même message si email ou mdp faux : on ne dit pas qui est inscrit
+            // même message si email ou mdp faux ,ne dit pas qui est inscrit
             $_SESSION['error'] = 'Identifiants incorrects.';
         }
 
-        // Post-Redirect-Get : on revient toujours sur /connexion
+        // Post-Redirect-Get  revient toujours sur /connexion
         $this->redirect('/connexion');
     }
 
@@ -139,6 +139,12 @@ final class Login extends Controller
      */
     private function forgotPassword(): void
     {
+        // code reçu (URL ou champ caché)  affiche le nouveau mdp
+        if (filter_input(INPUT_GET, 'token') || filter_input(INPUT_POST, 'token')) {
+            $this->resetPassword();
+            return;
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = trim((string) filter_input(INPUT_POST, 'email'));
             $userModel = new User();
@@ -150,9 +156,8 @@ final class Login extends Controller
                 $userModel->saveResetToken((int) $user['id_user'], $token);
 
                 $appUrl = rtrim($_ENV['APP_URL'] ?? 'https://masae2026.alwaysdata.net/', '/');
-                $link = $appUrl . '/reinitialiser?token=' . $token;
-
-                error_log("Test identifiants : Utilisateur=[" . $_ENV['MAIL_USERNAME'] . "] MdP longueur=" . strlen($_ENV['MAIL_PASSWORD'] ?? ''));
+                // code dans l'URL : marche en cliquant ou en copiant-collant
+                $link = $appUrl . '/mot-de-passe-oublie?token=' . $token;
 
                 $mail = new PHPMailer(true);
                 try {
@@ -179,10 +184,11 @@ final class Login extends Controller
                     $mail->Body    = "<p>{$greeting}</p>
                         <p>Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le lien ci-dessous :</p>
                         <p><a href='{$link}'>{$link}</a></p>
+                        <p>Ce lien est valable 1 heure et ne fonctionne qu'une seule fois.</p>
                         <p>Si vous n'êtes pas à l'origine de cette demande, ignorez simplement cet e-mail.</p>
                         <p>L'équipe SAE</p>";
 
-                    $mail->AltBody = "{$greeting}\n\nVous avez demandé à réinitialiser votre mot de passe. Cliquez sur le lien ci-dessous :\n{$link}\n\nSi vous n'êtes pas à l'origine de cette demande, ignorez simplement cet e-mail.\n\nL'équipe SAE";
+                    $mail->AltBody = "{$greeting}\n\nVous avez demandé à réinitialiser votre mot de passe. Cliquez sur le lien ci-dessous :\n{$link}\n\nCe lien est valable 1 heure et ne fonctionne qu'une seule fois.\n\nSi vous n'êtes pas à l'origine de cette demande, ignorez simplement cet e-mail.\n\nL'équipe SAE";
 
                     $mail->send();
                 } catch (PHPMailerException $e) {
@@ -193,7 +199,7 @@ final class Login extends Controller
             // même message dans tous les cas pour ne pas dire qui est inscrit
             $_SESSION['message'] = 'Si ce compte existe bien, un email a été envoyé.';
 
-            // Post-Redirect-Get : F5 ne renvoie pas un deuxième mail
+            // Post-Redirect-Get  F5 ne renvoie pas un deuxième mail
             $this->redirect('/mot-de-passe-oublie');
         }
 
@@ -212,12 +218,17 @@ final class Login extends Controller
      */
     private function resetPassword(): void
     {
-        // code secret dans l'adresse
-        $token = (string) filter_input(INPUT_GET, 'token');
+        // code dans le champ caché (POST) ou dans l'URL (GET)
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $token = (string) filter_input(INPUT_POST, 'token');
+        } else {
+            $token = (string) filter_input(INPUT_GET, 'token');
+        }
+
         $userModel = new User();
         $user = $userModel->findByResetToken($token);
 
-        // lien valide et formulaire envoyé : on vérifie le nouveau mdp
+        // lien valide et formulaire envoyé on vérifie le nouveau mdp
         if ($user !== null && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $password = (string) filter_input(INPUT_POST, 'password');
             $confirm = (string) filter_input(INPUT_POST, 'password_confirm');
@@ -234,7 +245,7 @@ final class Login extends Controller
 
             if ($error !== '') {
                 $_SESSION['error'] = $error;
-                $this->redirect('/reinitialiser?token=' . urlencode($token));
+                $this->redirect('/mot-de-passe-oublie?token=' . urlencode($token));
             }
 
             // on enregistre le mdp haché, jamais en clair
@@ -247,7 +258,7 @@ final class Login extends Controller
         $error = $_SESSION['error'] ?? '';
         unset($_SESSION['error']);
 
-        // code inconnu ou expiré : pas de formulaire
+        // code inconnu ou expiré  pas de formulaire
         if ($user === null) {
             $error = 'Lien invalide ou expiré.';
             $token = '';
@@ -261,4 +272,3 @@ final class Login extends Controller
         ]);
     }
 }
-
