@@ -76,4 +76,18 @@ abstract class Controller
         header('Location: ' . $path, true, 302);
         exit;
     }
+    
+    /**
+     * @brief Renvoie vers la page de connexion si l'utilisateur n'est pas connecté.
+     *
+     * À appeler au début des pages réservées aux utilisateurs connectés.
+     */
+    protected function checkLogin(): void
+    {
+        // user_email est mis en session à la connexion
+        if (!isset($_SESSION['user_email'])) {
+            $_SESSION['error'] = 'Connectez-vous pour accéder à cette page.';
+            $this->redirect('/connexion');
+        }
+    }
 }
