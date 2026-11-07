@@ -111,6 +111,42 @@ final class User extends Model
     }
 
     /**
+     * @brief Récupère les informations modifiables d'un utilisateur (jamais le mot de passe).
+     *
+     * @param int $id Identifiant utilisateur.
+     * @return array<string, mixed>|null Nom, prénom et e-mail si l'utilisateur existe.
+     */
+    public function findProfile(int $id): ?array
+    {
+        $sql = 'SELECT id_user, nom, prenom, email FROM User WHERE id_user = :id LIMIT 1';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue('id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $user === false ? null : $user;
+    }
+
+    /**
+     * @brief Met à jour le nom, le prénom et l'e-mail d'un utilisateur.
+     *
+     * @param int $id Identifiant utilisateur.
+     * @param string $nom Nouveau nom.
+     * @param string $prenom Nouveau prénom.
+     * @param string $email Nouvelle adresse e-mail (unique : une PDOException est levée si elle est déjà prise).
+     */
+    public function updateProfile(int $id, string $nom, string $prenom, string $email): void
+    {
+        $sql = 'UPDATE User SET nom = :nom, prenom = :prenom, email = :email WHERE id_user = :id';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue('nom', $nom, PDO::PARAM_STR);
+        $stmt->bindValue('prenom', $prenom, PDO::PARAM_STR);
+        $stmt->bindValue('email', $email, PDO::PARAM_STR);
+        $stmt->bindValue('id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    /**
      * @brief Marque l'adresse mail d'un utilisateur comme vérifiée et invalide le jeton.
      *
      * @param int $id Identifiant utilisateur.

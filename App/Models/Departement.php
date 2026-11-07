@@ -183,15 +183,15 @@ final class Departement extends Model
     }
 
     /**
-     * @brief Enregistre les informations saisies à la première connexion et invalide le lien.
+     * @brief Enregistre les informations saisies à la première connexion, invalide le lien et active le compte.
      *
      * @param int $id Identifiant du département.
-     * @param string $ville Ville (site) du département.
+     * @param string $ville Site IUT du département (valeur de SitesIutEnum).
      * @param string $hash Mot de passe hashé avec PASSWORD_DEFAULT.
      */
     public function completeSetup(int $id, string $ville, string $hash): void
     {
-        $sql = 'UPDATE Departement SET ville = :ville, mot_de_passe = :hash, '
+        $sql = 'UPDATE Departement SET ville = :ville, mot_de_passe = :hash, actif = 1, '
             . 'setup_token = NULL, setup_expire = NULL WHERE id_departement = :id';
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue('ville', $ville, PDO::PARAM_STR);

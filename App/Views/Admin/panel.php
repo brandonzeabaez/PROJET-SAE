@@ -26,6 +26,11 @@ $listParams = static fn (int $p): string => '/admin?' . http_build_query(array_f
         <p class="admin-subtitle">Gérez les accès partagés des secrétariats de l'IUT.</p>
     </header>
 
+    <nav class="admin-tabs" aria-label="Navigation administration">
+        <a class="admin-tab is-active" href="/admin" aria-current="page">Comptes secrétariats</a>
+        <a class="admin-tab" href="/admin/informations">Mes informations</a>
+    </nav>
+
     <?php // message d'erreur ou de réussite de la dernière action ?>
     <?php if ($error !== '') : ?>
         <p class="admin-alert admin-alert--error" role="alert"><?= htmlspecialchars($error) ?></p>
@@ -72,7 +77,7 @@ $listParams = static fn (int $p): string => '/admin?' . http_build_query(array_f
                 $configure = (bool) $departement['configure'];
                 $actif = (bool) $departement['actif'];
 
-                // statut selon l'avancement : invitation -> première connexion -> activation par l'admin
+                // statut selon l'avancement : invitation -> première connexion (compte actif) -> désactivé par l'admin
                 if (!$configure) {
                     [$statut, $statutClass] = $departement['lien_expire']
                         ? ['Invitation expirée', 'expire']
@@ -80,7 +85,7 @@ $listParams = static fn (int $p): string => '/admin?' . http_build_query(array_f
                 } elseif ($actif) {
                     [$statut, $statutClass] = ['Actif', 'actif'];
                 } else {
-                    // jamais activé (création récente) ou désactivé ensuite : même état en base
+                    // désactivé par l'admin (la première connexion active le compte)
                     [$statut, $statutClass] = ['Désactivé', 'desactive'];
                 }
                 ?>
@@ -148,6 +153,6 @@ $listParams = static fn (int $p): string => '/admin?' . http_build_query(array_f
 
     <aside class="admin-info">
         <p class="admin-info-title">Protection des comptes</p>
-        <p>Désactiver un compte l'empêche de se connecter sans le supprimer. Un compte ne peut être activé qu'après la première connexion du secrétariat (ville et mot de passe). Les mots de passe ne sont jamais visibles.</p>
+        <p>Désactiver un compte l'empêche de se connecter sans le supprimer. Le compte devient actif dès que le secrétariat a choisi son site et son mot de passe via l'invitation. Les mots de passe ne sont jamais visibles.</p>
     </aside>
 </section>

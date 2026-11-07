@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS Reserve(
 
 -- Comptes des départements de l'IUT, créés par un administrateur (nom + e-mail partagé).
 -- Le secrétariat reçoit un lien unique (jeton stocké haché en SHA-256) pour
--- saisir la ville et choisir son mot de passe.
+-- choisir son site IUT (colonne ville) et son mot de passe ; le compte devient alors actif.
 -- mot_de_passe est NULL tant que cette première connexion n'est pas faite.
 CREATE TABLE IF NOT EXISTS Departement(
    id_departement INT AUTO_INCREMENT,

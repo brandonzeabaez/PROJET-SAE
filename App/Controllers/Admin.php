@@ -20,6 +20,7 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Models\Departement as DepartementModel;
+use App\Models\User;
 use PHPMailer\PHPMailer\Exception as PHPMailerException;
 use PHPMailer\PHPMailer\PHPMailer;
 
@@ -27,7 +28,8 @@ use PHPMailer\PHPMailer\PHPMailer;
  * @brief Contrôleur du panel administrateur des comptes secrétariats.
  *
  * Routes : /admin (liste, ?q= recherche, ?page= pagination), /admin/nouveau,
- * /admin/modifier?id=..., et en POST /admin/activate, /admin/deactivate, /admin/delete.
+ * /admin/modifier?id=..., /admin/informations (profil de l'admin),
+ * et en POST /admin/activate, /admin/deactivate, /admin/delete.
  */
 final class Admin extends Controller
 {
@@ -162,16 +164,78 @@ final class Admin extends Controller
     }
 
     /**
-     * @brief Active (ou réactive) un compte dont la première connexion est faite.
+     * @brief Affiche et traite l'onglet « Mes informations » : nom, prénom et e-mail de l'administrateur.
+     */
+    public function informations(): void
+    {
+        $id = (int) ($_SESSION['user_id'] ?? 0);
+        $userModel = new User();
+        $profile = $userModel->findProfile($id);
+
+        if ($profile === null) {
+            $_SESSION['error'] = 'Compte administrateur introuvable.';
+            $this->redirect('/admin');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->checkCsrf('/admin/informations');
+
+            $nom = trim((string) filter_input(INPUT_POST, 'nom'));
+            $prenom = trim((string) filter_input(INPUT_POST, 'prenom'));
+            $email = trim((string) filter_input(INPUT_POST, 'email'));
+
+            // mêmes limites que les colonnes de la table User (50 caractères)
+            $error = '';
+            if ($nom === '' || mb_strlen($nom) > 50 || $prenom === '' || mb_strlen($prenom) > 50) {
+                $error = 'Le nom et le prénom sont obligatoires (50 caractères maximum).';
+            } elseif (filter_var($email, FILTER_VALIDATE_EMAIL) === false || strlen($email) > 50) {
+                $error = 'Adresse e-mail invalide (50 caractères maximum).';
+            } else {
+                try {
+                    $userModel->updateProfile($id, $nom, $prenom, $email);
+                } catch (\PDOException $e) {
+                    error_log($e->getMessage());
+                    $error = 'Cette adresse e-mail est déjà utilisée par un autre compte.';
+                }
+            }
+
+            if ($error !== '') {
+                $_SESSION['error'] = $error;
+                $_SESSION['old'] = ['nom' => $nom, 'prenom' => $prenom, 'email' => $email];
+                $this->redirect('/admin/informations');
+            }
+
+            // l'e-mail affiché « connecté en tant que » suit la modification
+            $_SESSION['user_email'] = $email;
+            $_SESSION['message'] = 'Vos informations ont été mises à jour.';
+            $this->redirect('/admin/informations');
+        }
+
+        // valeurs saisies gardées en session après une erreur, sinon celles du compte
+        $old = $_SESSION['old'] ?? [];
+        unset($_SESSION['old']);
+
+        $this->render('Admin/informations', [
+            'title'       => 'Administration — Mes informations',
+            'description' => 'Modifiez le nom, le prénom et l\'e-mail du compte administrateur.',
+            'nom'         => $old['nom'] ?? $profile['nom'],
+            'prenom'      => $old['prenom'] ?? $profile['prenom'],
+            'email'       => $old['email'] ?? $profile['email'],
+            'csrfToken'   => $_SESSION['csrf_token'],
+        ] + $this->flashMessages());
+    }
+
+    /**
+     * @brief Réactive un compte désactivé (la première connexion doit avoir été faite).
      */
     public function activate(): void
     {
         $this->checkCsrf('/admin');
 
         if ((new DepartementModel())->setActive($this->postedId(), true)) {
-            $_SESSION['message'] = 'Compte activé.';
+            $_SESSION['message'] = 'Compte réactivé.';
         } else {
-            $_SESSION['error'] = 'Ce compte ne peut pas être activé tant que le secrétariat n\'a pas fait sa première connexion.';
+            $_SESSION['error'] = 'Ce compte ne peut pas être réactivé tant que le secrétariat n\'a pas fait sa première connexion.';
         }
 
         $this->redirect($this->listUrl());
@@ -350,14 +414,14 @@ final class Admin extends Controller
             $mail->Subject = "Invitation : compte du département {$nom} - Bourse d'échange";
             $mail->Body    = "<p>Bonjour,</p>
                 <p>Un compte partagé a été créé pour le département <strong>{$nomHtml}</strong> sur la Bourse d'échange de l'IUT.</p>
-                <p>Pour définir votre accès, cliquez sur le lien ci-dessous. Vous devrez indiquer la ville du département et choisir un mot de passe :</p>
+                <p>Pour définir votre accès, cliquez sur le lien ci-dessous. Vous devrez sélectionner le site IUT du département et choisir un mot de passe :</p>
                 <p><a href='{$link}'>{$link}</a></p>
-                <p>Ce lien est personnel et valable {$hours} heures. Une fois ces informations saisies, votre compte sera activé par un administrateur.</p>
+                <p>Ce lien est personnel et valable {$hours} heures. Une fois ces informations saisies, votre compte sera directement actif.</p>
                 <p>Si vous n'êtes pas concerné par ce message, ignorez simplement cet e-mail.</p>
                 <p>L'équipe SAE</p>";
             $mail->AltBody = "Bonjour,\n\nUn compte partagé a été créé pour le département {$nom} sur la Bourse d'échange de l'IUT.\n\n"
-                . "Pour définir votre accès, ouvrez le lien ci-dessous. Vous devrez indiquer la ville du département et choisir un mot de passe :\n{$link}\n\n"
-                . "Ce lien est personnel et valable {$hours} heures. Une fois ces informations saisies, votre compte sera activé par un administrateur.\n\n"
+                . "Pour définir votre accès, ouvrez le lien ci-dessous. Vous devrez sélectionner le site IUT du département et choisir un mot de passe :\n{$link}\n\n"
+                . "Ce lien est personnel et valable {$hours} heures. Une fois ces informations saisies, votre compte sera directement actif.\n\n"
                 . "Si vous n'êtes pas concerné par ce message, ignorez simplement cet e-mail.\n\nL'équipe SAE";
 
             $mail->send();

@@ -4,8 +4,8 @@
  * @brief Contrôleur de la première connexion d'un compte département.
  *
  * Le secrétariat arrive ici via le lien unique reçu par e-mail. Le nom du
- * département est choisi par l'administrateur : il doit saisir la ville et
- * choisir son mot de passe.
+ * département est choisi par l'administrateur : il doit sélectionner son site
+ * IUT et choisir son mot de passe. Le compte est alors actif.
  *
  * @author Brandon
  * @author Aymen
@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Content\Enums\SitesIutEnum;
 use App\Core\Controller;
 use App\Models\Departement as DepartementModel;
 
@@ -51,13 +52,14 @@ final class Departement extends Controller
 
         // lien valide et formulaire envoyé : on vérifie les données
         if ($departement !== null && $_SERVER['REQUEST_METHOD'] === 'POST') {
-            $ville = trim((string) filter_input(INPUT_POST, 'ville'));
+            $ville = (string) filter_input(INPUT_POST, 'ville');
             $password = (string) filter_input(INPUT_POST, 'password');
             $confirm = (string) filter_input(INPUT_POST, 'password_confirm');
 
             $error = '';
-            if ($ville === '' || mb_strlen($ville) > 100) {
-                $error = 'La ville est obligatoire (100 caractères maximum).';
+            // le site doit faire partie de la liste des sites IUT de l'académie
+            if (SitesIutEnum::tryFrom($ville) === null) {
+                $error = 'Veuillez choisir le site de votre département dans la liste.';
             } elseif (!preg_match(self::REGEX_PASSWORD, $password)) {
                 $error = 'Le mot de passe doit contenir au moins 8 caractères, une minuscule, une majuscule, un chiffre et un caractère spécial (@ $ ! % * ? &).';
             } elseif ($password !== $confirm) {
@@ -66,15 +68,15 @@ final class Departement extends Controller
 
             if ($error !== '') {
                 $_SESSION['error'] = $error;
-                // on garde la ville saisie pour ne pas la retaper
+                // on garde le site choisi pour ne pas le resélectionner
                 $_SESSION['old'] = ['ville' => $ville];
                 $this->redirect('/departement/configurer?token=' . urlencode($token));
             }
 
-            // on enregistre le mdp haché, jamais en clair, et le lien devient inutilisable
+            // on enregistre le mdp haché, jamais en clair, le lien devient inutilisable et le compte est activé
             $model->completeSetup((int) $departement['id_departement'], $ville, password_hash($password, PASSWORD_DEFAULT));
 
-            $_SESSION['message'] = 'Informations enregistrées. Vous pourrez vous connecter dès qu\'un administrateur aura activé votre compte.';
+            $_SESSION['message'] = 'Votre compte est prêt : vous pouvez vous connecter avec l\'e-mail partagé et votre mot de passe.';
             $this->redirect('/connexion');
         }
 

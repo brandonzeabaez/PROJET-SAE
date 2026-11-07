@@ -27,10 +27,16 @@
         <form action="/departement/configurer?token=<?= htmlspecialchars($token) ?>" method="post">
 
             <div class="field">
-                <label for="ville">Ville</label>
-                <input type="text" id="ville" name="ville" maxlength="100"
-                       value="<?= htmlspecialchars($old['ville'] ?? '') ?>"
-                       placeholder="Aix-en-Provence" autocomplete="address-level2" required>
+                <label for="ville">Site IUT</label>
+                <select id="ville" name="ville" required>
+                    <option value="">Choisir un site</option>
+                    <?php foreach (\App\Content\Enums\SitesIutEnum::cases() as $site) : ?>
+                        <?php // le site choisi avant une erreur reste sélectionné ?>
+                        <option value="<?= htmlspecialchars($site->value) ?>"<?= ($old['ville'] ?? '') === $site->value ? ' selected' : '' ?>>
+                            <?= htmlspecialchars($site->value) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
             </div>
 
             <p id="password-requirements">8 caractères minimum, avec une minuscule, une majuscule, un chiffre et un caractère spécial (@ $ ! % * ? &amp;).</p>
