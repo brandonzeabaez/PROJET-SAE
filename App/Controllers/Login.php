@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Core\Controller;
+use App\Models\Departement;
 use App\Models\User;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception as PHPMailerException;
@@ -91,6 +92,11 @@ final class Login extends Controller
 
         $user = (new User())->findByEmail($email);
 
+        // pas d'utilisateur avec cet email : c'est peut-être le compte d'un département
+        if ($user === null) {
+            $this->loginDepartement($email, $password);
+        }
+
         $validCredentials = $user !== null && password_verify($password, $user['mot_de_passe']);
 
         if ($validCredentials && !(bool) $user['email_verifie']) {
@@ -102,12 +108,49 @@ final class Login extends Controller
 
             $_SESSION['user_id'] = (int) $user['id_user'];
             $_SESSION['user_email'] = $user['email'];
+            // id_hierarchie 2 = administrateur (accès au panel /admin)
+            $_SESSION['role'] = (int) $user['id_hierarchie'] === 2 ? 'admin' : 'utilisateur';
         } else {
             // même message si email ou mdp faux : on ne dit pas qui est inscrit
             $_SESSION['error'] = 'Identifiants incorrects.';
         }
 
         // Post-Redirect-Get : on revient toujours sur /connexion
+        $this->redirect('/connexion');
+    }
+
+    /**
+     * @brief Vérifie les identifiants d'un compte département et ouvre sa session.
+     *
+     * Le compte doit avoir fait sa première connexion (mot de passe choisi,
+     * ce qui l'active) et ne pas avoir été désactivé par un administrateur.
+     *
+     * @param string $email Adresse e-mail du secrétariat.
+     * @param string $password Mot de passe saisi.
+     */
+    private function loginDepartement(string $email, string $password): never
+    {
+        $departement = (new Departement())->findByEmail($email);
+
+        // mot_de_passe est NULL tant que la première connexion n'est pas faite
+        $validCredentials = $departement !== null
+            && $departement['mot_de_passe'] !== null
+            && password_verify($password, $departement['mot_de_passe']);
+
+        if ($validCredentials && !(bool) $departement['actif']) {
+            $_SESSION['error'] = 'Votre compte département a été désactivé par un administrateur.';
+        } elseif ($validCredentials) {
+            // nouvel identifiant de session : empêche le vol de session
+            session_regenerate_id(true);
+
+            $_SESSION['departement_id'] = (int) $departement['id_departement'];
+            $_SESSION['user_email'] = $departement['email_secretariat'];
+            $_SESSION['role'] = 'departement';
+        } else {
+            // même message si email ou mdp faux : on ne dit pas qui est inscrit
+            $_SESSION['error'] = 'Identifiants incorrects.';
+        }
+
         $this->redirect('/connexion');
     }
 

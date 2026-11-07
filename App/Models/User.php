@@ -36,8 +36,8 @@ final class User extends Model
      */
     public function findByEmail(string $email): ?array
     {
-        // prenom sert à dire « Bonjour {prénom} » dans le mail
-        $sql = 'SELECT id_user, email, mot_de_passe, prenom, email_verifie FROM User WHERE email = :email LIMIT 1';
+        // prenom sert à dire « Bonjour {prénom} » dans le mail, id_hierarchie donne le rôle
+        $sql = 'SELECT id_user, email, mot_de_passe, prenom, email_verifie, id_hierarchie FROM User WHERE email = :email LIMIT 1';
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue('email', $email, PDO::PARAM_STR);
         $stmt->execute();
@@ -108,6 +108,42 @@ final class User extends Model
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $user === false ? null : $user;
+    }
+
+    /**
+     * @brief Récupère les informations modifiables d'un utilisateur (jamais le mot de passe).
+     *
+     * @param int $id Identifiant utilisateur.
+     * @return array<string, mixed>|null Nom, prénom et e-mail si l'utilisateur existe.
+     */
+    public function findProfile(int $id): ?array
+    {
+        $sql = 'SELECT id_user, nom, prenom, email FROM User WHERE id_user = :id LIMIT 1';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue('id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $user === false ? null : $user;
+    }
+
+    /**
+     * @brief Met à jour le nom, le prénom et l'e-mail d'un utilisateur.
+     *
+     * @param int $id Identifiant utilisateur.
+     * @param string $nom Nouveau nom.
+     * @param string $prenom Nouveau prénom.
+     * @param string $email Nouvelle adresse e-mail (unique : une PDOException est levée si elle est déjà prise).
+     */
+    public function updateProfile(int $id, string $nom, string $prenom, string $email): void
+    {
+        $sql = 'UPDATE User SET nom = :nom, prenom = :prenom, email = :email WHERE id_user = :id';
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue('nom', $nom, PDO::PARAM_STR);
+        $stmt->bindValue('prenom', $prenom, PDO::PARAM_STR);
+        $stmt->bindValue('email', $email, PDO::PARAM_STR);
+        $stmt->bindValue('id', $id, PDO::PARAM_INT);
+        $stmt->execute();
     }
 
     /**
