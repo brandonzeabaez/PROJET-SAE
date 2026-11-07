@@ -15,12 +15,12 @@
  */
 ?>
 <section class="admin-page">
-    <header class="admin-header">
+    <div class="admin-header">
         <p class="admin-badge">Accès administrateur uniquement</p>
         <h1><?= $isEdit ? 'Modifier un compte secrétariat' : 'Créer un compte secrétariat' ?></h1>
         <p class="admin-subtitle">Un accès partagé pour l'ensemble de l'équipe du département.</p>
         <p><a class="admin-back" href="/admin">← Retour aux comptes</a></p>
-    </header>
+    </div>
 
     <div class="card admin-form-card">
         <div class="admin-form-header">

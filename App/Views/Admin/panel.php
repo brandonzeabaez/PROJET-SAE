@@ -20,16 +20,16 @@
 $listParams = static fn (int $p): string => '/admin?' . http_build_query(array_filter(['q' => $search, 'page' => $p > 1 ? $p : null]));
 ?>
 <section class="admin-page">
-    <header class="admin-header">
+    <div class="admin-header">
         <p class="admin-badge">Accès administrateur uniquement</p>
         <h1>Administration — Comptes</h1>
         <p class="admin-subtitle">Gérez les accès partagés des secrétariats de l'IUT.</p>
-    </header>
+    </div>
 
-    <nav class="admin-tabs" aria-label="Navigation administration">
+    <div class="admin-tabs" role="navigation" aria-label="Navigation administration">
         <a class="admin-tab is-active" href="/admin" aria-current="page">Comptes secrétariats</a>
         <a class="admin-tab" href="/admin/informations">Mes informations</a>
-    </nav>
+    </div>
 
     <?php // message d'erreur ou de réussite de la dernière action ?>
     <?php if ($error !== '') : ?>
@@ -123,7 +123,7 @@ $listParams = static fn (int $p): string => '/admin?' . http_build_query(array_f
             </tbody>
         </table>
 
-        <nav class="pagination" aria-label="Pagination des comptes">
+        <div class="pagination" role="navigation" aria-label="Pagination des comptes">
             <p class="pagination-info"><?= $firstIndex ?>–<?= $lastIndex ?> sur <?= $total ?></p>
             <ul class="pagination-pages">
                 <li>
@@ -148,7 +148,7 @@ $listParams = static fn (int $p): string => '/admin?' . http_build_query(array_f
                     <?php endif; ?>
                 </li>
             </ul>
-        </nav>
+        </div>
     <?php endif; ?>
 
     <aside class="admin-info">

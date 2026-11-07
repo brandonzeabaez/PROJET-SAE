@@ -14,16 +14,16 @@
  */
 ?>
 <section class="admin-page">
-    <header class="admin-header">
+    <div class="admin-header">
         <p class="admin-badge">Accès administrateur uniquement</p>
         <h1>Administration — Mes informations</h1>
         <p class="admin-subtitle">Modifiez les informations de votre compte administrateur.</p>
-    </header>
+    </div>
 
-    <nav class="admin-tabs" aria-label="Navigation administration">
+    <div class="admin-tabs" role="navigation" aria-label="Navigation administration">
         <a class="admin-tab" href="/admin">Comptes secrétariats</a>
         <a class="admin-tab is-active" href="/admin/informations" aria-current="page">Mes informations</a>
-    </nav>
+    </div>
 
     <div class="card admin-form-card">
         <h2>Mon compte</h2>

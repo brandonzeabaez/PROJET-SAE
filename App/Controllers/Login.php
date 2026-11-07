@@ -122,8 +122,8 @@ final class Login extends Controller
     /**
      * @brief Vérifie les identifiants d'un compte département et ouvre sa session.
      *
-     * Le compte doit avoir fait sa première connexion (mot de passe choisi)
-     * et avoir été activé par un administrateur.
+     * Le compte doit avoir fait sa première connexion (mot de passe choisi,
+     * ce qui l'active) et ne pas avoir été désactivé par un administrateur.
      *
      * @param string $email Adresse e-mail du secrétariat.
      * @param string $password Mot de passe saisi.
@@ -138,7 +138,7 @@ final class Login extends Controller
             && password_verify($password, $departement['mot_de_passe']);
 
         if ($validCredentials && !(bool) $departement['actif']) {
-            $_SESSION['error'] = 'Votre compte département n\'a pas encore été activé par un administrateur.';
+            $_SESSION['error'] = 'Votre compte département a été désactivé par un administrateur.';
         } elseif ($validCredentials) {
             // nouvel identifiant de session : empêche le vol de session
             session_regenerate_id(true);
