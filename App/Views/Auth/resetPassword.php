@@ -10,8 +10,9 @@
     <?php if ($token !== '') : ?>
         <p>8 caractères minimum, avec une majuscule, un chiffre et un caractère spécial (@ $ ! % * ? &amp;).</p>
 
-        <?php // le code reste dans l'adresse pour savoir de quel compte c'est  à l'envoi ?>
-        <form action="/reinitialiser?token=<?= htmlspecialchars($token) ?>" method="post">
+        <?php // code de l'URL gardé dans un champ caché pour l'envoi ?>
+        <form action="/mot-de-passe-oublie" method="post">
+            <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
             <div class="field">
                 <label for="password">Nouveau mot de passe</label>
                 <?php //  navigateur propose un mdp solide ?>
