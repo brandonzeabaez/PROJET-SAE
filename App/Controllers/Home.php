@@ -14,10 +14,13 @@ use App\Views\Home\HomeView;
 class Home extends Controller
 {
     /**
-     * @brief Affiche la page d'accueil du site.
+     * @brief Affiche la page d'accueil du site, réservée aux utilisateurs connectés.
      */
     public function execute(): void
     {
+        // pas connecté , retour à la connexion
+        $this->checkLogin();
+
         (new HomeView())->showHome();
     }
 }
